@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
+import { Link } from 'react-router-dom';
 
 type Personnel = {
   id: string;
@@ -35,7 +36,9 @@ export default function PersonnelList() {
       ) : (
         <ul>
           {personnel.map((p) => (
-            <li key={p.id}>{p.name} — {p.rank} — {p.role}</li>
+            <li key={p.id}>
+                <Link to={`/personnel/${p.id}`}>{p.name} — {p.rank} — {p.role}</Link>
+            </li>
           ))}
         </ul>
       )}
