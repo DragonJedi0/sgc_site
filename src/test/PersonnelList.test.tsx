@@ -1,0 +1,52 @@
+import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import { describe, it, expect, vi } from 'vitest';
+import PersonnelList from '../pages/PersonnelList';
+import { supabase } from '../lib/supabase';
+
+// Mock the supabase client
+vi.mock('../lib/supabase', () => ({
+  supabase: {
+    from: vi.fn(),
+  },
+}));
+
+// Mock the data in supabase
+const mockPersonnel = [
+    { id: '1', name: "Jack O'Neill", rank: 'Colonel', role: 'Team Leader', team: 'SG-1', status: 'active' },
+    { id: '2', name: 'Dr. Daniel Jackson', rank: 'Civilian Contractor', role: 'Archeology Expert', team: 'SG-1', status: 'active' },
+];
+
+describe('PersonnelList', () => {
+  it('displays a message when no records are found', async () => {
+    vi.mocked(supabase.from).mockReturnValueOnce({
+        select: vi.fn().mockResolvedValueOnce({ data: [], error: null }),
+    } as any);
+
+    render(
+      <MemoryRouter>
+        <PersonnelList />
+      </MemoryRouter>
+    );
+
+    const message = await screen.findByText('No personnel records found.');
+    expect(message).toBeInTheDocument();
+  });
+
+  it('displays personnel records when data is returned', async () =>{
+    vi.mocked(supabase.from).mockReturnValueOnce({
+        select: vi.fn().mockResolvedValueOnce({ data: mockPersonnel, error: null }),
+    } as any);
+
+    render(
+      <MemoryRouter>
+        <PersonnelList />
+      </MemoryRouter>
+    );
+
+    const jack = await screen.findByText(/Jack O'Neill/);
+    const daniel = await screen.findByText(/Daniel Jackson/);
+    expect(jack).toBeInTheDocument();
+    expect(daniel).toBeInTheDocument();
+  });
+});
