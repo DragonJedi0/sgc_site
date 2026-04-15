@@ -35,6 +35,8 @@ export default function PersonnelForm() {
         .select('*')
         .eq('id', id)
         .single();
+      console.log('fetched data:', data);
+      console.log('error:', error);
       if (error) console.error(error);
       else setForm(data);
       setFetching(false);
@@ -69,7 +71,7 @@ export default function PersonnelForm() {
   }
 
   if (fetching) return <p>Loading...</p>;
-  
+
   return (
     <div>
       <h1>{isEditing ? 'Edit Personnel' : 'Add Personnel'}</h1>

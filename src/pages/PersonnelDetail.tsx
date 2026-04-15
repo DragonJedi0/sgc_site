@@ -35,6 +35,19 @@ export default function PersonnelDetail() {
   if (loading) return <p>Loading...</p>;
   if (!person) return <p>Personnel record not found.</p>;
 
+  async function handleDelete() {
+    if(!person) return;
+    if(!confirm('Are you sure you want to delete this recored?')) return;
+
+    const { error } = await supabase
+      .from('personnel')
+      .delete()
+      .eq('id', person.id);
+    
+    if (error) console.error(error);
+    else navigate('/');
+  }
+
   return (
     <div>
       <h1>{person.name}</h1>
@@ -43,7 +56,8 @@ export default function PersonnelDetail() {
       <p>Team: {person.team ?? 'Unassigned'}</p>
       <p>Status: {person.status}</p>
       <button onClick={() => navigate('/')}>Back</button>
-      <button onClick={() => navigate('/personnel/${person.id}/edit')}>Edit</button>
+      <button onClick={() => navigate(`/personnel/${person.id}/edit`)}>Edit</button>
+      <button onClick={handleDelete}>Delete</button>
     </div>
   );
 }
