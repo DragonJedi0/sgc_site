@@ -43,6 +43,7 @@ export default function PersonnelDetail() {
       <p>Team: {person.team ?? 'Unassigned'}</p>
       <p>Status: {person.status}</p>
       <button onClick={() => navigate('/')}>Back</button>
+      <button onClick={() => navigate('/personnel/${person.id}/edit')}>Edit</button>
     </div>
   );
 }

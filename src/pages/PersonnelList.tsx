@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 type Personnel = {
   id: string;
@@ -14,6 +14,7 @@ type Personnel = {
 export default function PersonnelList() {
   const [personnel, setPersonnel] = useState<Personnel[]>([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchPersonnel() {
@@ -34,6 +35,7 @@ export default function PersonnelList() {
       {personnel.length === 0 ? (
         <p>No personnel records found.</p>
       ) : (
+        <div>
         <ul>
           {personnel.map((p) => (
             <li key={p.id}>
@@ -41,6 +43,8 @@ export default function PersonnelList() {
             </li>
           ))}
         </ul>
+        <button onClick={() => navigate('/personnel/new')}>Add Personnel</button>
+        </div>
       )}
     </div>
   );
