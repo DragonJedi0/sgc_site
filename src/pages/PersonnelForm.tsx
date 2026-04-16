@@ -3,18 +3,28 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 
 type PersonnelFormData = {
-  name: string;
+  prefix: string;
+  first_name: string;
+  middle_name: string;
+  last_name: string;
+  suffix: string;
   rank: string;
   role: string;
   team: string;
+  personnel_type: string;
   status: string;
 };
 
 const defaultForm: PersonnelFormData = {
-  name: '',
+  prefix: '',
+  first_name: '',
+  middle_name: '',
+  last_name: '',
+  suffix: '',
   rank: '',
   role: '',
   team: '',
+  personnel_type: 'military',
   status: 'active',
 };
 
@@ -76,18 +86,54 @@ export default function PersonnelForm() {
     <div>
       <h1>{isEditing ? 'Edit Personnel' : 'Add Personnel'}</h1>
       <form onSubmit={handleSubmit}>
-        <label>Name<input name="name" value={form.name} onChange={handleChange} required /></label>
-        <label>Rank<input name="rank" value={form.rank} onChange={handleChange} required /></label>
-        <label>Role<input name="role" value={form.role} onChange={handleChange} required /></label>
-        <label>Team<input name="team" value={form.team} onChange={handleChange} /></label>
-        <label>
-          Status
-          <select name="status" value={form.status} onChange={handleChange}>
+        <label htmlFor="prefix">Prefix</label>
+          <select id="prefix" name="prefix" value={form.prefix} onChange={handleChange}>
+            <option value="">None</option>
+            <option value="Mr.">Mr.</option>
+            <option value="Ms.">Ms.</option>
+            <option value="Mrs.">Mrs.</option>
+            <option value="Dr.">Dr.</option>
+          </select>
+
+          <label htmlFor="first_name">First Name</label>
+          <input id="first_name" name="first_name" value={form.first_name} onChange={handleChange} required />
+
+          <label htmlFor="middle_name">Middle Name</label>
+          <input id="middle_name" name="middle_name" value={form.middle_name} onChange={handleChange} />
+
+          <label htmlFor="last_name">Last Name</label>
+          <input id="last_name" name="last_name" value={form.last_name} onChange={handleChange} required />
+
+          <label htmlFor="suffix">Suffix</label>
+          <input id="suffix" name="suffix" value={form.suffix} onChange={handleChange} />
+
+          <label htmlFor="rank">Rank</label>
+          <input id="rank" name="rank" value={form.rank} onChange={handleChange} />
+
+          <label htmlFor="role">Role</label>
+          <input id="role" name="role" value={form.role} onChange={handleChange} required />
+
+          <label htmlFor="team">Team</label>
+          <input id="team" name="team" value={form.team} onChange={handleChange} />
+
+          <label htmlFor="personnel_type">Personnel Type</label>
+          <select id="personnel_type" name="personnel_type" value={form.personnel_type} onChange={handleChange}>
+            <option value="military">Military</option>
+            <option value="civilian">Civilian</option>
+          </select>
+
+          <label htmlFor="status">Status</label>
+          <select id="status" name="status" value={form.status} onChange={handleChange}>
             <option value="active">Active</option>
             <option value="inactive">Inactive</option>
+            <option value="mia">MIA</option>
             <option value="kia">KIA</option>
+            <option value="deceased">Deceased</option>
+            <option value="retired">Retired</option>
+            <option value="transferred">Transferred</option>
+            <option value="medical_leave">Medical Leave</option>
+            <option value="suspended">Suspended</option>
           </select>
-        </label>
         <button type="submit" disabled={loading}>
           {loading ? 'Saving...' : 'Save'}
         </button>

@@ -4,10 +4,15 @@ import { Link, useNavigate } from 'react-router-dom';
 
 type Personnel = {
   id: string;
-  name: string;
-  rank: string;
+  prefix: string | null;
+  first_name: string;
+  middle_name: string | null;
+  last_name: string;
+  suffix: string | null;
+  rank: string | null;
   role: string;
   team: string | null;
+  personnel_type: string;
   status: string;
 };
 
@@ -39,7 +44,9 @@ export default function PersonnelList() {
         <ul>
           {personnel.map((p) => (
             <li key={p.id}>
-                <Link to={`/personnel/${p.id}`}>{p.name} — {p.rank} — {p.role}</Link>
+              <Link to={`/personnel/${p.id}`}>
+                {p.prefix ? `${p.prefix} ` : ''}{p.first_name} {p.middle_name ? `${p.middle_name} ` : ''}{p.last_name}{p.suffix ? ` ${p.suffix}` : ''} — {p.rank} — {p.role}
+              </Link>
             </li>
           ))}
         </ul>

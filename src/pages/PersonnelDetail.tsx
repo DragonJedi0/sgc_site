@@ -4,10 +4,15 @@ import { supabase } from '../lib/supabase';
 
 type Personnel = {
   id: string;
-  name: string;
-  rank: string;
+  prefix: string | null;
+  first_name: string;
+  middle_name: string | null;
+  last_name: string;
+  suffix: string | null;
+  rank: string | null;
   role: string;
   team: string | null;
+  personnel_type: string;
   status: string;
 };
 
@@ -50,14 +55,18 @@ export default function PersonnelDetail() {
 
   return (
     <div>
-      <h1>{person.name}</h1>
-      <p>Rank: {person.rank}</p>
+      <h1>
+        {person.prefix ? `${person.prefix} ` : ''}
+        {person.first_name} 
+        {person.middle_name ? ` ${person.middle_name}` : ''} 
+        {person.last_name}
+        {person.suffix ? ` ${person.suffix}` : ''}
+      </h1>
+      <p>Rank: {person.rank ?? 'N/A'}</p>
       <p>Role: {person.role}</p>
       <p>Team: {person.team ?? 'Unassigned'}</p>
+      <p>Personnel Type: {person.personnel_type}</p>
       <p>Status: {person.status}</p>
-      <button onClick={() => navigate('/')}>Back</button>
-      <button onClick={() => navigate(`/personnel/${person.id}/edit`)}>Edit</button>
-      <button onClick={handleDelete}>Delete</button>
     </div>
   );
 }
