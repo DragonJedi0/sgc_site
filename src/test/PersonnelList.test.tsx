@@ -45,7 +45,7 @@ describe('PersonnelList', () => {
     );
 
     const jack = await screen.findByText(/Jack O'Neill/);
-    const daniel = await screen.findByText(/Daniel Jackson/);
+    const daniel = await screen.findByText(/Dr. Daniel Jackson/);
     expect(jack).toBeInTheDocument();
     expect(daniel).toBeInTheDocument();
   });

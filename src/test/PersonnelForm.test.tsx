@@ -4,6 +4,7 @@ import { describe, it, expect, vi } from 'vitest';
 import PersonnelForm from '../pages/PersonnelForm';
 import { supabase } from '../lib/supabase';
 import userEvent from '@testing-library/user-event';
+import PersonnelList from '../pages/PersonnelList';
 
 const user = userEvent.setup();
 
@@ -91,5 +92,73 @@ describe('PersonnelForm', () => {
     expect(await screen.findByLabelText('Team')).toHaveValue('SG-1');
     expect(await screen.findByLabelText('Role')).toHaveValue('Team Leader');
     expect(await screen.findByLabelText('Status')).toHaveValue('active');
+  });
+
+  it('should update values into database after clicking save', async () => {
+    // Populate mock database with data
+    vi.mocked(supabase.from).mockReturnValueOnce({
+      select: vi.fn().mockReturnValueOnce({
+        eq: vi.fn().mockReturnValueOnce({
+          single: vi.fn().mockResolvedValueOnce({ data: mockPersonnel[1], error: null }),
+        }),
+      }),
+    } as any);
+
+    const updateMock = vi.fn().mockReturnValueOnce({
+      eq: vi.fn().mockResolvedValueOnce({ error: null }),
+    });
+
+    // Save to mock db
+    vi.mocked(supabase.from).mockReturnValueOnce({
+        update: updateMock,
+    } as any);
+
+    render(
+        <MemoryRouter initialEntries={['/personnel/2/edit']}>
+            <Routes>
+                <Route path="/personnel/:id/edit" element={<PersonnelForm />} />
+            </Routes>
+        </MemoryRouter>
+    );
+
+    // Type into fields
+    await user.type(await screen.findByLabelText('Name'), "Doctor Jackson");
+    // click save
+    await user.click(screen.getByText('Save'));
+
+    // Expected behavior
+    expect(updateMock).toHaveBeenCalled();
+  });
+
+  it('should navigate back to personnel list', async () =>{
+    // Populate mock database with data
+    vi.mocked(supabase.from).mockReturnValueOnce({
+      select: vi.fn().mockReturnValueOnce({
+        eq: vi.fn().mockReturnValueOnce({
+          single: vi.fn().mockResolvedValueOnce({ data: mockPersonnel[1], error: null }),
+        }),
+      }),
+    } as any);
+
+    vi.mocked(supabase.from).mockReturnValueOnce({
+            select: vi.fn().mockResolvedValueOnce({ data: mockPersonnel, error: null }),
+        } as any);
+
+    render(
+        <MemoryRouter initialEntries={['/personnel/2/edit']}>
+            <Routes>
+                <Route path="/personnel/:id/edit" element={<PersonnelForm />} />
+                <Route path="/" element={<PersonnelList />} />
+            </Routes>
+        </MemoryRouter>
+    );
+
+    await user.click(await screen.findByText('Cancel'));
+
+
+
+    const title = await screen.findByText(/SGC Personnel/);
+
+    expect(title).toBeInTheDocument();
   });
 });
