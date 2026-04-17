@@ -42,7 +42,7 @@ export default function PersonnelDetail() {
 
   async function handleDelete() {
     if(!person) return;
-    if(!confirm('Are you sure you want to delete this recored?')) return;
+    if(!confirm('Are you sure you want to delete this record?')) return;
 
     const { error } = await supabase
       .from('personnel')

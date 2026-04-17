@@ -37,24 +37,24 @@ export default function PersonnelList() {
   return (
     <div>
       <h1>SGC Personnel</h1>
+      <button onClick={() => navigate('/personnel/new')}>Add Personnel</button>
       {personnel.length === 0 ? (
         <p>No personnel records found.</p>
       ) : (
         <div>
-        <ul>
-          {personnel.map((p) => (
-            <li key={p.id}>
-              <Link to={`/personnel/${p.id}`}>
-                {p.personnel_type == 'civilian' ? p.prefix ? `${p.prefix} ` : '' : `${p.rank} `}
-                {`${p.first_name} `}
-                {p.middle_name ? `${p.middle_name} ` : ''}
-                {p.last_name}
-                {p.suffix ? ` ${p.suffix}` : ''}
-              </Link>
-            </li>
-          ))}
-        </ul>
-        <button onClick={() => navigate('/personnel/new')}>Add Personnel</button>
+          <ul>
+            {personnel.map((p) => (
+              <li key={p.id}>
+                <Link to={`/personnel/${p.id}`}>
+                  {p.personnel_type == 'civilian' ? p.prefix ? `${p.prefix} ` : '' : `${p.rank} `}
+                  {`${p.first_name} `}
+                  {p.middle_name ? `${p.middle_name} ` : ''}
+                  {p.last_name}
+                  {p.suffix ? ` ${p.suffix}` : ''}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </div>
