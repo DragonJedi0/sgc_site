@@ -16,14 +16,19 @@ vi.mock('../lib/supabase', () => ({
 }));
 
 // Mock data 
-const name = "Eli Hawk";
+const prefix = "Mr."
+const first_name = "Eli";
+const middle_name = "Fish";
+const last_name = "Hawk";
+const suffix = "Jr.";
+const personnel_type = "military";
 const rank = "Lieutenant";
 const team = "SG-2";
 const role = "Technical Expert";
 const status = "active";
 const mockPersonnel = [
-    { id: '1', name: "Jack O'Neill", rank: 'Colonel', role: 'Team Leader', team: 'SG-1', status: 'active' },
-    { id: '2', name: 'Dr. Daniel Jackson', rank: 'Civilian Contractor', role: 'Archeology Expert', team: 'SG-1', status: 'active' },
+    { id: '1', rank: 'Colonel', role: 'Team Leader', team: 'SG-1', status: 'active', prefix: 'Mr.', first_name: 'Jack', middle_name: '', last_name: "O'Neill", suffix: '', personnel_type: 'military' },
+    { id: '2', rank: 'Civilian Contractor', role: 'Archeology Expert', team: 'SG-1', status: 'active', prefix: 'Dr.', first_name: 'Daniel', middle_name: '', last_name: 'Jackson', suffix: '', personnel_type: 'civilian' },
 ];
 
 describe('PersonnelForm', () => {
@@ -34,10 +39,15 @@ describe('PersonnelForm', () => {
         </MemoryRouter>
     );
 
-    expect(screen.getByLabelText('Name')).toHaveValue('');
+    expect(screen.getByLabelText('Prefix')).toHaveValue('');
+    expect(screen.getByLabelText('First Name')).toHaveValue('');
+    expect(screen.getByLabelText('Middle Name')).toHaveValue('');
+    expect(screen.getByLabelText('Last Name')).toHaveValue('');
+    expect(screen.getByLabelText('Suffix')).toHaveValue('');
     expect(screen.getByLabelText('Rank')).toHaveValue('');
     expect(screen.getByLabelText('Team')).toHaveValue('');
     expect(screen.getByLabelText('Role')).toHaveValue('');
+    expect(screen.getByLabelText('Personnel Type')).toHaveValue('military');
     expect(screen.getByLabelText('Status')).toHaveValue('active');
   });
 
@@ -56,11 +66,16 @@ describe('PersonnelForm', () => {
     );
 
     // Type into fields
-    await user.type(screen.getByLabelText('Name'), name);
+    await user.type(screen.getByLabelText('First Name'), first_name);
+    await user.type(screen.getByLabelText('Middle Name'), middle_name);
+    await user.type(screen.getByLabelText('Last Name'), last_name);
+    await user.type(screen.getByLabelText('Suffix'), suffix);
     await user.type(screen.getByLabelText('Rank'), rank);
     await user.type(screen.getByLabelText('Team'), team);
     await user.type(screen.getByLabelText('Role'), role);
       // Select dropdown value
+    await user.selectOptions(screen.getByLabelText('Prefix'), prefix);
+    await user.selectOptions(screen.getByLabelText('Personnel Type'), personnel_type);
     await user.selectOptions(screen.getByLabelText('Status'), status);
 
     // click save
@@ -87,10 +102,15 @@ describe('PersonnelForm', () => {
         </MemoryRouter>
     );
 
-    expect(await screen.findByLabelText('Name')).toHaveValue("Jack O'Neill");
+    expect(await screen.findByLabelText('Prefix')).toHaveValue("Mr.");
+    expect(await screen.findByLabelText('First Name')).toHaveValue("Jack");
+    expect(await screen.findByLabelText('Middle Name')).toHaveValue('');
+    expect(await screen.findByLabelText('Last Name')).toHaveValue("O'Neill");
+    expect(await screen.findByLabelText('Suffix')).toHaveValue('');
     expect(await screen.findByLabelText('Rank')).toHaveValue('Colonel');
     expect(await screen.findByLabelText('Team')).toHaveValue('SG-1');
     expect(await screen.findByLabelText('Role')).toHaveValue('Team Leader');
+    expect(await screen.findByLabelText('Personnel Type')).toHaveValue("military");
     expect(await screen.findByLabelText('Status')).toHaveValue('active');
   });
 
@@ -122,7 +142,7 @@ describe('PersonnelForm', () => {
     );
 
     // Type into fields
-    await user.type(await screen.findByLabelText('Name'), "Doctor Jackson");
+    await user.selectOptions(await screen.findByLabelText('Status'), "kia");
     // click save
     await user.click(screen.getByText('Save'));
 

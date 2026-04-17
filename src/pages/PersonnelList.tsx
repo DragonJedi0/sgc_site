@@ -45,7 +45,11 @@ export default function PersonnelList() {
           {personnel.map((p) => (
             <li key={p.id}>
               <Link to={`/personnel/${p.id}`}>
-                {p.prefix ? `${p.prefix} ` : ''}{p.first_name} {p.middle_name ? `${p.middle_name} ` : ''}{p.last_name}{p.suffix ? ` ${p.suffix}` : ''} — {p.rank} — {p.role}
+                {p.personnel_type == 'civilian' ? p.prefix ? `${p.prefix} ` : '' : `${p.rank} `}
+                {`${p.first_name} `}
+                {p.middle_name ? `${p.middle_name} ` : ''}
+                {p.last_name}
+                {p.suffix ? ` ${p.suffix}` : ''}
               </Link>
             </li>
           ))}
