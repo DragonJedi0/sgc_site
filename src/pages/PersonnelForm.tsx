@@ -108,7 +108,31 @@ export default function PersonnelForm() {
           <input id="suffix" name="suffix" value={form.suffix} onChange={handleChange} />
 
           <label htmlFor="rank">Rank</label>
-          <input id="rank" name="rank" value={form.rank} onChange={handleChange} />
+          <select id="rank" name="rank" value={form.rank} onChange={handleChange}>
+            <option value="">None</option>
+            <option value="Airman Basic">Airman Basic</option>
+            <option value="Airman">Airman</option>
+            <option value="Airman First Class">Airman First Class</option>
+            <option value="Senior Airman">Senior Airman</option>
+            <option value="Staff Sergeant">Staff Sergeant</option>
+            <option value="Technical Sergeant">Technical Sergeant</option>
+            <option value="Master Sergeant">Master Sergeant</option>
+            <option value="Senior Master Sergeant">Senior Master Sergeant</option>
+            <option value="Chief Master Sergeant">Chief Master Sergeant</option>
+            <option value="Command Chief Master Sergeant">Command Chief Master Sergeant</option>
+            <option value="Chief Master Sergeant of the Air Force">Chief Master Sergeant of the Air Force</option>
+            <option value="Second Lieutenant">Second Lieutenant</option>
+            <option value="First Lieutenant">First Lieutenant</option>
+            <option value="Captain">Captain</option>
+            <option value="Major">Major</option>
+            <option value="Lieutenant Colonel">Lieutenant Colonel</option>
+            <option value="Colonel">Colonel</option>
+            <option value="Brigadier General">Brigadier General</option>
+            <option value="Major General">Major General</option>
+            <option value="Lieutenant General">Lieutenant General</option>
+            <option value="General">General</option>
+            <option value="General of the Air Force">General of the Air Force</option>
+          </select>
 
           <label htmlFor="role">Role</label>
           <input id="role" name="role" value={form.role} onChange={handleChange} required />
