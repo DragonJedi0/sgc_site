@@ -21,6 +21,7 @@ export default function PersonnelDetail() {
   const navigate = useNavigate();
   const [person, setPerson] = useState<Personnel | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<{ message: string; code: string } | null>(null);
 
   useEffect(() => {
     async function fetchPerson() {
@@ -29,8 +30,10 @@ export default function PersonnelDetail() {
         .select('*')
         .eq('id', id)
         .single();
-      if (error) console.error(error);
-      else setPerson(data);
+      if (error) {
+        console.error(error);
+        setError({ message: error.message, code: error.code });
+      } else setPerson(data);
       setLoading(false);
     }
 
@@ -38,6 +41,7 @@ export default function PersonnelDetail() {
   }, [id]);
 
   if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error {error.code}: {error.message}</p>;
   if (!person) return <p>Personnel record not found.</p>;
 
   async function handleDelete() {

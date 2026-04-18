@@ -35,6 +35,7 @@ export default function PersonnelForm() {
   const [loading, setLoading] = useState(false);
   const isEditing = Boolean(id);
   const [fetching, setFetching] = useState(isEditing);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!isEditing) return;
@@ -62,22 +63,34 @@ export default function PersonnelForm() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
+    const formData = {
+      ...form,
+      prefix: form.prefix === '' ? null : form.prefix,
+      rank: form.rank === '' ? null : form.rank,
+    }
 
     if (isEditing) {
       const { error } = await supabase
         .from('personnel')
-        .update(form)
+        .update(formData)
         .eq('id', id);
-      if (error) console.error(error);
+      if (error) {
+        console.error(error);
+        setSubmitError(error.message);
+      } else {
+        navigate('/');
+      }
     } else {
       const { error } = await supabase
         .from('personnel')
-        .insert(form);
-      if (error) console.error(error);
+        .insert(formData);
+      if (error) {
+        console.error(error);
+        setSubmitError(error.message);
+      } else navigate('/');
     }
 
     setLoading(false);
-    navigate('/');
   }
 
   if (fetching) return <p>Loading...</p>;
@@ -85,6 +98,7 @@ export default function PersonnelForm() {
   return (
     <div>
       <h1>{isEditing ? 'Edit Personnel' : 'Add Personnel'}</h1>
+      {submitError && <p style={{ color: 'red' }}>{submitError}</p>}
       <form onSubmit={handleSubmit}>
         <label htmlFor="prefix">Prefix</label>
           <select id="prefix" name="prefix" value={form.prefix} onChange={handleChange}>

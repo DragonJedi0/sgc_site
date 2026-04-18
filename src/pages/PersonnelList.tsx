@@ -21,12 +21,15 @@ export default function PersonnelList() {
   const [personnel, setPersonnel] = useState<Personnel[]>([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchPersonnel() {
       const { data, error } = await supabase.from('personnel').select('*');
-      if (error) console.error(error);
-      else setPersonnel(data);
+      if (error) {
+        console.error(error);
+        setError(error.message);
+      } else setPersonnel(data);
       setLoading(false);
     }
 
@@ -34,6 +37,8 @@ export default function PersonnelList() {
   }, []);
 
   if (loading) return <p>Loading...</p>;
+
+  if (error) return <p>No personnel records found.</p>;
 
   return (
     <div>

@@ -26,11 +26,14 @@ describe('PersonnelDetail', () => {
         vi.mocked(supabase.from).mockReturnValueOnce({
             select: vi.fn().mockReturnValueOnce({
               eq: vi.fn().mockReturnValueOnce({
-                single: vi.fn().mockResolvedValueOnce({ data: null, error: { message: 'not found' } }),
+                single: vi.fn().mockResolvedValueOnce({
+                  data: null,
+                  error: null
+                }),
               }),
             }),
         } as any);
-    
+
         render(
           <MemoryRouter initialEntries={['/personnel/1']}>
             <Routes>
@@ -38,10 +41,34 @@ describe('PersonnelDetail', () => {
             </Routes>
           </MemoryRouter>
         );
-    
+
         const message = await screen.findByText('Personnel record not found.');
         expect(message).toBeInTheDocument();
       });
+
+    it('displays error message when fetch fails', async () =>{
+      vi.mocked(supabase.from).mockReturnValueOnce({
+        select: vi.fn().mockReturnValueOnce({
+          eq: vi.fn().mockReturnValueOnce({
+            single: vi.fn().mockResolvedValueOnce({ 
+              data: null, 
+              error: { message: 'connection failed', code: '500' } 
+            }),
+          }),
+        }),
+      } as any);
+
+      render(
+        <MemoryRouter initialEntries={['/personnel/1']}>
+          <Routes>
+            <Route path="/personnel/:id" element={<PersonnelDetail />} />
+          </Routes>
+        </MemoryRouter>
+      );
+
+      const message = await screen.findByText('Error 500: connection failed');
+      expect(message).toBeInTheDocument();
+    });
 
     it('displays the detailed records when data is returned', async () => {
       vi.mocked(supabase.from).mockReturnValueOnce({
