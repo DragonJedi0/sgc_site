@@ -28,7 +28,7 @@ const role = "Technical Expert";
 const status = "active";
 const mockPersonnel = [
     { id: '1', rank: 'Colonel', role: 'Team Leader', team: 'SG-1', status: 'active', prefix: 'Mr.', first_name: 'Jack', middle_name: '', last_name: "O'Neill", suffix: '', personnel_type: 'military' },
-    { id: '2', rank: 'Civilian Contractor', role: 'Archeology Expert', team: 'SG-1', status: 'active', prefix: 'Dr.', first_name: 'Daniel', middle_name: '', last_name: 'Jackson', suffix: '', personnel_type: 'civilian' },
+    { id: '2', rank: '', role: 'Archeology Expert', team: 'SG-1', status: 'active', prefix: 'Dr.', first_name: 'Daniel', middle_name: '', last_name: 'Jackson', suffix: '', personnel_type: 'civilian' },
 ];
 
 describe('PersonnelForm', () => {
@@ -70,10 +70,10 @@ describe('PersonnelForm', () => {
     await user.type(screen.getByLabelText('Middle Name'), middle_name);
     await user.type(screen.getByLabelText('Last Name'), last_name);
     await user.type(screen.getByLabelText('Suffix'), suffix);
-    await user.type(screen.getByLabelText('Rank'), rank);
     await user.type(screen.getByLabelText('Team'), team);
     await user.type(screen.getByLabelText('Role'), role);
       // Select dropdown value
+    await user.selectOptions(screen.getByLabelText('Rank'), rank);
     await user.selectOptions(screen.getByLabelText('Prefix'), prefix);
     await user.selectOptions(screen.getByLabelText('Personnel Type'), personnel_type);
     await user.selectOptions(screen.getByLabelText('Status'), status);
