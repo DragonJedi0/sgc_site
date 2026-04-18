@@ -85,6 +85,49 @@ describe('PersonnelForm', () => {
     expect(insertMock).toHaveBeenCalled();
   });
 
+  it('should display error message when insert fails', async () => {
+    vi.mocked(supabase.from).mockReturnValueOnce({
+      insert: vi.fn().mockResolvedValueOnce({ error: { message: 'insert failed' } }),
+    } as any);
+
+    render(
+      <MemoryRouter>
+        <PersonnelForm />
+      </MemoryRouter>
+    );
+
+    await user.type(screen.getByLabelText('First Name'), first_name);
+    await user.type(screen.getByLabelText('Last Name'), last_name);
+    await user.type(screen.getByLabelText('Role'), role);
+    await user.click(screen.getByText('Save'));
+
+    const error = await screen.findByText('insert failed');
+    expect(error).toBeInTheDocument();
+  });
+
+  it('should convert empty prefix and rank to null on submit', async () => {
+  const insertMock = vi.fn().mockResolvedValueOnce({ error: null });
+
+  vi.mocked(supabase.from).mockReturnValueOnce({
+    insert: insertMock,
+  } as any);
+
+  render(
+    <MemoryRouter>
+      <PersonnelForm />
+    </MemoryRouter>
+  );
+
+  await user.type(screen.getByLabelText('First Name'), first_name);
+  await user.type(screen.getByLabelText('Last Name'), last_name);
+  await user.type(screen.getByLabelText('Role'), role);
+  await user.click(screen.getByText('Save'));
+
+  expect(insertMock).toHaveBeenCalledWith(
+    expect.objectContaining({ prefix: null, rank: null })
+  );
+});
+
   it('should show values of record to edit', async () =>{
     vi.mocked(supabase.from).mockReturnValueOnce({
       select: vi.fn().mockReturnValueOnce({
