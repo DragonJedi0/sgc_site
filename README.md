@@ -1,73 +1,80 @@
-# React + TypeScript + Vite
+# SGC Database
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A fictional Stargate Command personnel and mission records system inspired by the TV series Stargate SG-1. Built as a portfolio project to demonstrate full-stack development and professional testing practices.
 
-Currently, two official plugins are available:
+The in-universe premise: NORAD has contracted a developer to digitize the SGC's personnel and mission files into a clean, accessible web application.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Tech Stack
 
-## React Compiler
+- **Frontend:** React, TypeScript, Vite
+- **Backend:** Supabase (PostgreSQL, REST API)
+- **Testing:** Vitest, React Testing Library, userEvent
+- **CI/CD:** GitHub Actions
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+- Full CRUD for SGC personnel records
+- Role-aware display (military rank abbreviations vs civilian titles)
+- Enum-enforced data integrity (rank, status, prefix, personnel type)
+- Comprehensive unit test suite with mocked Supabase client
+- Automated CI pipeline on push to main, staging, and dev branches
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Getting Started
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Prerequisites
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- Node.js 22+
+- npm
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Installation
+
+```bash
+git clone https://github.com/yourusername/sgc_site.git
+cd sgc_site
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Environment Variables
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Create a `.env` file in the project root:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
+VITE_SUPABASE_URL=your_supabase_project_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+## Running Locally
+
+`npm run dev`
+
+## Running Tests
+
+`npm run test:run`
+
+## Project Structure
+
+```
+src/
+  lib/
+    supabase.ts           # Supabase client
+    rankAbbreviations.ts  # Military rank lookup (Air Force specific)
+  pages/
+    PersonnelList.tsx
+    PersonnelDetail.tsx
+    PersonnelForm.tsx
+  test/
+    PersonnelList.test.tsx
+    PersonnelDetail.test.tsx
+    PersonnelForm.test.tsx
+```
+
+## Roadmap
+
+- [x] Personnel CRUD
+- [x] Unit tests
+- [ ] Teams management
+- [ ] Mission records
+- [ ] Integration tests with MSW
+- [ ] E2E tests with Playwright
+- [ ] GitHub Pages deployment
+- [ ] Role-based access control
