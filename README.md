@@ -1,6 +1,6 @@
 # SGC Database
 
-A fictional Stargate Command personnel and mission records system inspired by the TV series Stargate SG-1. Built as a portfolio project to demonstrate full-stack development and professional testing practices.
+A fictional Stargate Command personnel and mission records system inspired by the TV series _Stargate SG-1_. Built as a portfolio project to demonstrate full-stack development and professional testing practices.
 
 The in-universe premise: NORAD has contracted a developer to digitize the SGC's personnel and mission files into a clean, accessible web application.
 
@@ -29,7 +29,7 @@ The in-universe premise: NORAD has contracted a developer to digitize the SGC's 
 ### Installation
 
 ```bash
-git clone https://github.com/yourusername/sgc_site.git
+git clone https://github.com/DragonJedi0/sgc_site.git
 cd sgc_site
 npm install
 ```
@@ -43,11 +43,11 @@ VITE_SUPABASE_URL=your_supabase_project_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
-## Running Locally
+### Running Locally
 
 `npm run dev`
 
-## Running Tests
+### Running Tests
 
 `npm run test:run`
 
@@ -68,13 +68,15 @@ src/
     PersonnelForm.test.tsx
 ```
 
-## Roadmap
+## Development Roadmap
 
 - [x] Personnel CRUD
 - [x] Unit tests
-- [ ] Teams management
-- [ ] Mission records
+- [x] CI/CD pipeline
 - [ ] Integration tests with MSW
 - [ ] E2E tests with Playwright
+- [ ] Teams management
+- [ ] Mission records
 - [ ] GitHub Pages deployment
+- [ ] Styling
 - [ ] Role-based access control
