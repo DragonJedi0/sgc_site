@@ -31,7 +31,24 @@ describe('PersonnelList (integration)', () => {
 
         render(
             <MemoryRouter>
-            <PersonnelList />
+                <PersonnelList />
+            </MemoryRouter>
+        );
+
+        const message = await screen.findByText('No personnel records found.');
+        expect(message).toBeInTheDocument();
+    });
+
+    it('displays no records message when API returns error', async () => {
+        server.use(
+            http.get(`${import.meta.env.VITE_SUPABASE_URL}/rest/v1/personnel`, () => {
+            return new HttpResponse(null, { status: 500 });
+            })
+        );
+
+        render(
+            <MemoryRouter>
+                <PersonnelList />
             </MemoryRouter>
         );
 
