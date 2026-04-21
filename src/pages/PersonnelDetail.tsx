@@ -31,8 +31,14 @@ export default function PersonnelDetail() {
         .eq('id', id)
         .single();
       if (error) {
-        console.error(error);
-        setError({ message: error.message, code: error.code });
+        if (error.code === 'PGRST116'){
+          setPerson(null);
+        } else {
+          console.error(error);
+          setError({ message: 'An unexpected error occurred.', code: '500' });
+        }
+        setLoading(false);
+        return;
       } else setPerson(data);
       setLoading(false);
     }

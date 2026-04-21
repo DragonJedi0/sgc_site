@@ -3,6 +3,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { describe, it, expect, vi } from 'vitest';
 import PersonnelList from '../pages/PersonnelList';
 import { supabase } from '../lib/supabase';
+import { mockPersonnel } from '../lib/mockData';
 
 // Mock the supabase client
 vi.mock('../lib/supabase', () => ({
@@ -10,12 +11,6 @@ vi.mock('../lib/supabase', () => ({
     from: vi.fn(),
   },
 }));
-
-// Mock the data in supabase
-const mockPersonnel = [
-    { id: '1', rank: 'Colonel', role: 'Team Leader', team: 'SG-1', status: 'active', prefix: 'Mr.', first_name: 'Jack', middle_name: '', last_name: "O'Neill", suffix: '', personnel_type: 'military' },
-    { id: '2', rank: '', role: 'Archeology Expert', team: 'SG-1', status: 'active', prefix: 'Dr.', first_name: 'Daniel', middle_name: '', last_name: 'Jackson', suffix: 'PHD', personnel_type: 'civilian' },
-];
 
 describe('PersonnelList', () => {
   it('displays a message when no records are found', async () => {

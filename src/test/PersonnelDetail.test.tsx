@@ -4,6 +4,7 @@ import { describe, it, expect, vi } from 'vitest';
 import PersonnelDetail from '../pages/PersonnelDetail';
 import { supabase } from '../lib/supabase';
 import userEvent from '@testing-library/user-event';
+import { mockPersonnel } from '../lib/mockData';
 
 const user = userEvent.setup();
 
@@ -14,13 +15,6 @@ vi.mock('../lib/supabase', () => ({
   },
 }));
 
-// Mock the data in supabase
-const mockPersonnel = [
-    { id: '1', rank: 'Colonel', role: 'Team Leader', team: 'SG-1', status: 'active', prefix: 'Mr.', first_name: 'Jack', middle_name: '', last_name: "O'Neill", suffix: '', personnel_type: 'military' },
-    { id: '2', rank: '', role: 'Archeology Expert', team: 'SG-1', status: 'active', prefix: 'Dr.', first_name: 'Daniel', middle_name: '', last_name: 'Jackson', suffix: '', personnel_type: 'civilian' },
-    { id: '3', rank: 'Second Lieutenant', role: 'Combat Support', team: 'SG-2', status: 'active', prefix: 'Mr.', first_name: 'Carl', middle_name: 'John', last_name: 'Baker', suffix: 'III', personnel_type: 'military' },
-];
-
 describe('PersonnelDetail', () => {
     it('displays a message when no records are found', async () => {
         vi.mocked(supabase.from).mockReturnValueOnce({
@@ -28,7 +22,7 @@ describe('PersonnelDetail', () => {
               eq: vi.fn().mockReturnValueOnce({
                 single: vi.fn().mockResolvedValueOnce({
                   data: null,
-                  error: null
+                  error:  { message: 'no rows returned', code: 'PGRST116' }
                 }),
               }),
             }),
@@ -66,7 +60,7 @@ describe('PersonnelDetail', () => {
         </MemoryRouter>
       );
 
-      const message = await screen.findByText('Error 500: connection failed');
+      const message = await screen.findByText('Error 500: An unexpected error occurred.');
       expect(message).toBeInTheDocument();
     });
 
