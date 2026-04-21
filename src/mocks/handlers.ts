@@ -17,4 +17,9 @@ export const handlers = [
   http.delete(`${supabaseUrl}/rest/v1/personnel`, () =>{
     return HttpResponse.json({});
   }),
+
+  http.patch(`${supabaseUrl}/request/v1/personnel`, async ({ request }) =>{
+    const body = await request.json();
+    return HttpResponse.json([body], { status: 200 });
+  }),
 ];

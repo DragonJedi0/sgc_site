@@ -16,21 +16,6 @@ vi.mock('../lib/supabase', () => ({
   },
 }));
 
-// // Mock data 
-// const prefix = "Mr."
-// const first_name = "Eli";
-// const middle_name = "Fish";
-// const last_name = "Hawk";
-// const suffix = "Jr.";
-// const personnel_type = "military";
-// const rank = "Second Lieutenant";
-// const team = "SG-2";
-// const role = "Technical Expert";
-// const status = "active";
-// const mockPersonnel = [
-//     { id: '1', rank: 'Colonel', role: 'Team Leader', team: 'SG-1', status: 'active', prefix: 'Mr.', first_name: 'Jack', middle_name: '', last_name: "O'Neill", suffix: '', personnel_type: 'military' },
-//     { id: '2', rank: '', role: 'Archeology Expert', team: 'SG-1', status: 'active', prefix: 'Dr.', first_name: 'Daniel', middle_name: '', last_name: 'Jackson', suffix: '', personnel_type: 'civilian' },
-// ];
 
 describe('PersonnelForm', () => {
   it('should show empty fields for new entries', () =>{
