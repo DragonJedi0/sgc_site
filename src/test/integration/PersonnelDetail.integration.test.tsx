@@ -1,0 +1,135 @@
+import { render, screen } from '@testing-library/react';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { describe, it, expect, vi } from 'vitest';
+import PersonnelList from '../../pages/PersonnelList';
+import PersonnelDetail from '../../pages/PersonnelDetail';
+import userEvent from '@testing-library/user-event';
+import PersonnelForm from '../../pages/PersonnelForm';
+
+const user = userEvent.setup();
+
+describe('PersonnelDetail (integration)', () => {
+    it('fetches and displays detailed military personnel record from the API', async () =>{
+        render(
+            <MemoryRouter initialEntries={['/personnel/3']}>
+            <Routes>
+                <Route path="/personnel/:id" element={<PersonnelDetail />} />
+            </Routes>
+            </MemoryRouter>
+        );
+
+        const heading = await screen.findByText(/Mr. Carl John Baker III/);
+        const rank = await screen.findByText(/Rank: Second Lieutenant/);
+        const team = await screen.findByText(/SG-2/);
+        const role = await screen.findByText(/Combat Support/);
+        const status = await screen.findByText(/active/);
+        expect(heading).toBeInTheDocument();
+        expect(rank).toBeInTheDocument();
+        expect(team).toBeInTheDocument();
+        expect(role).toBeInTheDocument();
+        expect(status).toBeInTheDocument();
+    });
+    
+    it('fetches and displays detailed civilian personnel record from the API', async () =>{
+        render(
+            <MemoryRouter initialEntries={['/personnel/4']}>
+            <Routes>
+                <Route path="/personnel/:id" element={<PersonnelDetail />} />
+            </Routes>
+            </MemoryRouter>
+        );
+
+        const heading = await screen.findByText(/Dr. Samantha Alexandra Shepard PHD/);
+        const rank = await screen.findByText(/Civilian Contractor/);
+        const team = await screen.findByText(/SG-2/);
+        const role = await screen.findByText(/Computer Expert/);
+        const status = await screen.findByText(/active/);
+        expect(heading).toBeInTheDocument();
+        expect(rank).toBeInTheDocument();
+        expect(team).toBeInTheDocument();
+        expect(role).toBeInTheDocument();
+        expect(status).toBeInTheDocument();
+    });
+
+    it('fetches and displays broken personnel record from the API successfully', async () =>{
+        render(
+            <MemoryRouter initialEntries={['/personnel/5']}>
+            <Routes>
+                <Route path="/personnel/:id" element={<PersonnelDetail />} />
+            </Routes>
+            </MemoryRouter>
+        );
+
+        const heading = await screen.findByText(/test test/);
+        const rank = await screen.findByText(/N\/A/);
+        const role = await screen.findByText(/broken/);
+        const status = await screen.findByText(/active/);
+        expect(heading).toBeInTheDocument();
+        expect(rank).toBeInTheDocument();
+        expect(role).toBeInTheDocument();
+        expect(status).toBeInTheDocument();
+    });
+
+    it('displays error message when no record found', async () =>{
+        render(
+        <MemoryRouter initialEntries={['/personnel/0']}>
+            <Routes>
+                <Route path="/personnel/:id" element={<PersonnelDetail />} />
+            </Routes>
+        </MemoryRouter>
+        );
+
+        const message = await screen.findByText('Personnel record not found.');
+        expect(message).toBeInTheDocument();
+    });
+
+    it('navigates to personnel form when clicking edit button', async () =>{
+        render(
+        <MemoryRouter initialEntries={['/personnel/2']}>
+            <Routes>
+                <Route path="/personnel/:id" element={<PersonnelDetail />} />
+                <Route path="/personnel/:id/edit" element={<PersonnelForm />} />
+            </Routes>
+        </MemoryRouter>
+        );
+
+        await user.click(await screen.findByText('Edit'));
+
+        expect(await screen.findByLabelText('First Name')).toHaveValue('Daniel');
+        expect(await screen.findByLabelText('Middle Name')).toHaveValue('');
+    });
+
+    it('navigates to the list view when clicking back', async () =>{
+        render(
+        <MemoryRouter initialEntries={['/personnel/2']}>
+            <Routes>
+                <Route path="/personnel/:id" element={<PersonnelDetail />} />
+                <Route path="/" element={<PersonnelList />} />
+            </Routes>
+        </MemoryRouter>
+        );
+
+        await user.click(await screen.findByText('Back'));
+
+        const jack = await screen.findByText(/Col Jack O'Neill/);
+        expect(jack).toBeInTheDocument(); 
+    });
+
+    it('navigates to the list view after confirming delete action', async () => {
+        vi.spyOn(window, 'confirm').mockReturnValueOnce(true);
+
+        render(
+        <MemoryRouter initialEntries={['/personnel/5']}>
+            <Routes>
+                <Route path="/personnel/:id" element={<PersonnelDetail />} />
+                <Route path="/" element={<PersonnelList />} />
+            </Routes>
+        </MemoryRouter>
+        );
+
+        await user.click(await screen.findByText('Delete'));
+
+        const jack = await screen.findByText(/Col Jack O'Neill/);
+        expect(jack).toBeInTheDocument(); 
+    });
+});
