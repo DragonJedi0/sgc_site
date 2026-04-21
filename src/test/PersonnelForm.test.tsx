@@ -106,27 +106,27 @@ describe('PersonnelForm', () => {
   });
 
   it('should convert empty prefix and rank to null on submit', async () => {
-  const insertMock = vi.fn().mockResolvedValueOnce({ error: null });
+    const insertMock = vi.fn().mockResolvedValueOnce({ error: null });
 
-  vi.mocked(supabase.from).mockReturnValueOnce({
-    insert: insertMock,
-  } as any);
+    vi.mocked(supabase.from).mockReturnValueOnce({
+      insert: insertMock,
+    } as any);
 
-  render(
-    <MemoryRouter>
-      <PersonnelForm />
-    </MemoryRouter>
-  );
+    render(
+      <MemoryRouter>
+        <PersonnelForm />
+      </MemoryRouter>
+    );
 
-  await user.type(screen.getByLabelText('First Name'), first_name);
-  await user.type(screen.getByLabelText('Last Name'), last_name);
-  await user.type(screen.getByLabelText('Role'), role);
-  await user.click(screen.getByText('Save'));
+    await user.type(screen.getByLabelText('First Name'), first_name);
+    await user.type(screen.getByLabelText('Last Name'), last_name);
+    await user.type(screen.getByLabelText('Role'), role);
+    await user.click(screen.getByText('Save'));
 
-  expect(insertMock).toHaveBeenCalledWith(
-    expect.objectContaining({ prefix: null, rank: null })
-  );
-});
+    expect(insertMock).toHaveBeenCalledWith(
+      expect.objectContaining({ prefix: null, rank: null })
+    );
+  });
 
   it('should show values of record to edit', async () =>{
     vi.mocked(supabase.from).mockReturnValueOnce({
@@ -193,7 +193,7 @@ describe('PersonnelForm', () => {
     expect(updateMock).toHaveBeenCalled();
   });
 
-  it('should navigate back to personnel list', async () =>{
+  it('should navigate back to personnel list when cancelling', async () =>{
     // Populate mock database with data
     vi.mocked(supabase.from).mockReturnValueOnce({
       select: vi.fn().mockReturnValueOnce({
@@ -217,8 +217,6 @@ describe('PersonnelForm', () => {
     );
 
     await user.click(await screen.findByText('Cancel'));
-
-
 
     const title = await screen.findByText(/SGC Personnel/);
 
