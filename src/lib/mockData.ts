@@ -1,4 +1,17 @@
-// Mock data
+// Mock data 
+export const mockEntry = {
+    prefix: "Mr.",
+    first_name: "Samuel",
+    middle_name: "FishHawk",
+    last_name: "Ybarra",
+    suffix: "Jr.",
+    personnel_type: "military",
+    rank: "Second Lieutenant",
+    team: "SG-2",
+    role: "Technical Expert",
+    status: "active"
+};
+
 export const mockPersonnel = [
     {
         id: '1',

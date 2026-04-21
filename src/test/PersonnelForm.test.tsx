@@ -5,6 +5,7 @@ import PersonnelForm from '../pages/PersonnelForm';
 import { supabase } from '../lib/supabase';
 import userEvent from '@testing-library/user-event';
 import PersonnelList from '../pages/PersonnelList';
+import { mockEntry, mockPersonnel } from '../lib/mockData';
 
 const user = userEvent.setup();
 
@@ -15,21 +16,21 @@ vi.mock('../lib/supabase', () => ({
   },
 }));
 
-// Mock data 
-const prefix = "Mr."
-const first_name = "Eli";
-const middle_name = "Fish";
-const last_name = "Hawk";
-const suffix = "Jr.";
-const personnel_type = "military";
-const rank = "Second Lieutenant";
-const team = "SG-2";
-const role = "Technical Expert";
-const status = "active";
-const mockPersonnel = [
-    { id: '1', rank: 'Colonel', role: 'Team Leader', team: 'SG-1', status: 'active', prefix: 'Mr.', first_name: 'Jack', middle_name: '', last_name: "O'Neill", suffix: '', personnel_type: 'military' },
-    { id: '2', rank: '', role: 'Archeology Expert', team: 'SG-1', status: 'active', prefix: 'Dr.', first_name: 'Daniel', middle_name: '', last_name: 'Jackson', suffix: '', personnel_type: 'civilian' },
-];
+// // Mock data 
+// const prefix = "Mr."
+// const first_name = "Eli";
+// const middle_name = "Fish";
+// const last_name = "Hawk";
+// const suffix = "Jr.";
+// const personnel_type = "military";
+// const rank = "Second Lieutenant";
+// const team = "SG-2";
+// const role = "Technical Expert";
+// const status = "active";
+// const mockPersonnel = [
+//     { id: '1', rank: 'Colonel', role: 'Team Leader', team: 'SG-1', status: 'active', prefix: 'Mr.', first_name: 'Jack', middle_name: '', last_name: "O'Neill", suffix: '', personnel_type: 'military' },
+//     { id: '2', rank: '', role: 'Archeology Expert', team: 'SG-1', status: 'active', prefix: 'Dr.', first_name: 'Daniel', middle_name: '', last_name: 'Jackson', suffix: '', personnel_type: 'civilian' },
+// ];
 
 describe('PersonnelForm', () => {
   it('should show empty fields for new entries', () =>{
@@ -66,17 +67,17 @@ describe('PersonnelForm', () => {
     );
 
     // Type into fields
-    await user.type(screen.getByLabelText('First Name'), first_name);
-    await user.type(screen.getByLabelText('Middle Name'), middle_name);
-    await user.type(screen.getByLabelText('Last Name'), last_name);
-    await user.type(screen.getByLabelText('Suffix'), suffix);
-    await user.type(screen.getByLabelText('Team'), team);
-    await user.type(screen.getByLabelText('Role'), role);
+    await user.type(screen.getByLabelText('First Name'), mockEntry.first_name);
+    await user.type(screen.getByLabelText('Middle Name'), mockEntry.middle_name);
+    await user.type(screen.getByLabelText('Last Name'), mockEntry.last_name);
+    await user.type(screen.getByLabelText('Suffix'), mockEntry.suffix);
+    await user.type(screen.getByLabelText('Team'), mockEntry.team);
+    await user.type(screen.getByLabelText('Role'), mockEntry.role);
       // Select dropdown value
-    await user.selectOptions(screen.getByLabelText('Rank'), rank);
-    await user.selectOptions(screen.getByLabelText('Prefix'), prefix);
-    await user.selectOptions(screen.getByLabelText('Personnel Type'), personnel_type);
-    await user.selectOptions(screen.getByLabelText('Status'), status);
+    await user.selectOptions(screen.getByLabelText('Rank'), mockEntry.rank);
+    await user.selectOptions(screen.getByLabelText('Prefix'), mockEntry.prefix);
+    await user.selectOptions(screen.getByLabelText('Personnel Type'), mockEntry.personnel_type);
+    await user.selectOptions(screen.getByLabelText('Status'), mockEntry.status);
 
     // click save
     await user.click(screen.getByText('Save'));
@@ -96,9 +97,9 @@ describe('PersonnelForm', () => {
       </MemoryRouter>
     );
 
-    await user.type(screen.getByLabelText('First Name'), first_name);
-    await user.type(screen.getByLabelText('Last Name'), last_name);
-    await user.type(screen.getByLabelText('Role'), role);
+    await user.type(screen.getByLabelText('First Name'), mockEntry.first_name);
+    await user.type(screen.getByLabelText('Last Name'), mockEntry.last_name);
+    await user.type(screen.getByLabelText('Role'), mockEntry.role);
     await user.click(screen.getByText('Save'));
 
     const error = await screen.findByText('insert failed');
@@ -118,9 +119,9 @@ describe('PersonnelForm', () => {
       </MemoryRouter>
     );
 
-    await user.type(screen.getByLabelText('First Name'), first_name);
-    await user.type(screen.getByLabelText('Last Name'), last_name);
-    await user.type(screen.getByLabelText('Role'), role);
+    await user.type(screen.getByLabelText('First Name'), mockEntry.first_name);
+    await user.type(screen.getByLabelText('Last Name'), mockEntry.last_name);
+    await user.type(screen.getByLabelText('Role'), mockEntry.role);
     await user.click(screen.getByText('Save'));
 
     expect(insertMock).toHaveBeenCalledWith(
