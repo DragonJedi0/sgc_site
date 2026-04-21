@@ -5,6 +5,7 @@ import PersonnelDetail from '../pages/PersonnelDetail';
 import { supabase } from '../lib/supabase';
 import userEvent from '@testing-library/user-event';
 import { mockPersonnel } from '../lib/mockData';
+import { PERSONNEL_DETAIL } from '../lib/paths';
 
 const user = userEvent.setup();
 
@@ -31,7 +32,7 @@ describe('PersonnelDetail', () => {
         render(
           <MemoryRouter initialEntries={['/personnel/1']}>
             <Routes>
-              <Route path="/personnel/:id" element={<PersonnelDetail />} />
+              <Route path={PERSONNEL_DETAIL} element={<PersonnelDetail />} />
             </Routes>
           </MemoryRouter>
         );
@@ -55,7 +56,7 @@ describe('PersonnelDetail', () => {
       render(
         <MemoryRouter initialEntries={['/personnel/1']}>
           <Routes>
-            <Route path="/personnel/:id" element={<PersonnelDetail />} />
+            <Route path={PERSONNEL_DETAIL} element={<PersonnelDetail />} />
           </Routes>
         </MemoryRouter>
       );
@@ -76,7 +77,7 @@ describe('PersonnelDetail', () => {
       render(
         <MemoryRouter initialEntries={['/personnel/1']}>
           <Routes>
-            <Route path="/personnel/:id" element={<PersonnelDetail />} />
+            <Route path={PERSONNEL_DETAIL} element={<PersonnelDetail />} />
           </Routes>
         </MemoryRouter>
       );
@@ -115,7 +116,7 @@ describe('PersonnelDetail', () => {
       render(
         <MemoryRouter initialEntries={['/personnel/3']}>
           <Routes>
-            <Route path="/personnel/:id" element={<PersonnelDetail />} />
+            <Route path={PERSONNEL_DETAIL} element={<PersonnelDetail />} />
           </Routes>
         </MemoryRouter>
       );
@@ -139,7 +140,7 @@ describe('PersonnelDetail', () => {
       render(
         <MemoryRouter initialEntries={['/personnel/3']}>
           <Routes>
-            <Route path="/personnel/:id" element={<PersonnelDetail />} />
+            <Route path={PERSONNEL_DETAIL} element={<PersonnelDetail />} />
           </Routes>
         </MemoryRouter>
       );

@@ -7,6 +7,7 @@ import { server } from '../../mocks/server';
 import PersonnelDetail from '../../pages/PersonnelDetail';
 import userEvent from '@testing-library/user-event';
 import PersonnelForm from '../../pages/PersonnelForm';
+import { PERSONNEL_DETAIL, PERSONNEL_DETAIL_EDIT, PERSONNEL_LIST } from '../../lib/paths';
 
 const user = userEvent.setup();
 
@@ -15,7 +16,7 @@ describe('PersonnelDetail (integration)', () => {
         render(
             <MemoryRouter initialEntries={['/personnel/3']}>
             <Routes>
-                <Route path="/personnel/:id" element={<PersonnelDetail />} />
+                <Route path={PERSONNEL_DETAIL} element={<PersonnelDetail />} />
             </Routes>
             </MemoryRouter>
         );
@@ -36,7 +37,7 @@ describe('PersonnelDetail (integration)', () => {
         render(
             <MemoryRouter initialEntries={['/personnel/4']}>
             <Routes>
-                <Route path="/personnel/:id" element={<PersonnelDetail />} />
+                <Route path={PERSONNEL_DETAIL} element={<PersonnelDetail />} />
             </Routes>
             </MemoryRouter>
         );
@@ -57,7 +58,7 @@ describe('PersonnelDetail (integration)', () => {
         render(
             <MemoryRouter initialEntries={['/personnel/5']}>
             <Routes>
-                <Route path="/personnel/:id" element={<PersonnelDetail />} />
+                <Route path={PERSONNEL_DETAIL} element={<PersonnelDetail />} />
             </Routes>
             </MemoryRouter>
         );
@@ -76,7 +77,7 @@ describe('PersonnelDetail (integration)', () => {
         render(
         <MemoryRouter initialEntries={['/personnel/0']}>
             <Routes>
-                <Route path="/personnel/:id" element={<PersonnelDetail />} />
+                <Route path={PERSONNEL_DETAIL} element={<PersonnelDetail />} />
             </Routes>
         </MemoryRouter>
         );
@@ -89,8 +90,8 @@ describe('PersonnelDetail (integration)', () => {
         render(
         <MemoryRouter initialEntries={['/personnel/2']}>
             <Routes>
-                <Route path="/personnel/:id" element={<PersonnelDetail />} />
-                <Route path="/personnel/:id/edit" element={<PersonnelForm />} />
+                <Route path={PERSONNEL_DETAIL} element={<PersonnelDetail />} />
+                <Route path={PERSONNEL_DETAIL_EDIT} element={<PersonnelForm />} />
             </Routes>
         </MemoryRouter>
         );
@@ -105,8 +106,8 @@ describe('PersonnelDetail (integration)', () => {
         render(
         <MemoryRouter initialEntries={['/personnel/2']}>
             <Routes>
-                <Route path="/personnel/:id" element={<PersonnelDetail />} />
-                <Route path="/" element={<PersonnelList />} />
+                <Route path={PERSONNEL_DETAIL} element={<PersonnelDetail />} />
+                <Route path={PERSONNEL_LIST} element={<PersonnelList />} />
             </Routes>
         </MemoryRouter>
         );
@@ -123,8 +124,8 @@ describe('PersonnelDetail (integration)', () => {
         render(
         <MemoryRouter initialEntries={['/personnel/5']}>
             <Routes>
-                <Route path="/personnel/:id" element={<PersonnelDetail />} />
-                <Route path="/" element={<PersonnelList />} />
+                <Route path={PERSONNEL_DETAIL} element={<PersonnelDetail />} />
+                <Route path={PERSONNEL_LIST} element={<PersonnelList />} />
             </Routes>
         </MemoryRouter>
         );
@@ -145,7 +146,7 @@ describe('PersonnelDetail (integration)', () => {
         render(
             <MemoryRouter initialEntries={['/personnel/1']}>
             <Routes>
-                <Route path="/personnel/:id" element={<PersonnelDetail />} />
+                <Route path={PERSONNEL_DETAIL} element={<PersonnelDetail />} />
             </Routes>
             </MemoryRouter>
         );
