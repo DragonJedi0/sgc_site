@@ -2,6 +2,8 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { describe, it, expect, vi } from 'vitest';
 import PersonnelList from '../../pages/PersonnelList';
+import { http, HttpResponse } from 'msw';
+import { server } from '../../mocks/server';
 import PersonnelDetail from '../../pages/PersonnelDetail';
 import userEvent from '@testing-library/user-event';
 import PersonnelForm from '../../pages/PersonnelForm';
@@ -131,5 +133,24 @@ describe('PersonnelDetail (integration)', () => {
 
         const jack = await screen.findByText(/Col Jack O'Neill/);
         expect(jack).toBeInTheDocument(); 
+    });
+
+    it('displays error message when API returns server error', async () => {
+        server.use(
+            http.get(`${import.meta.env.VITE_SUPABASE_URL}/rest/v1/personnel`, () => {
+            return new HttpResponse(null, { status: 500 });
+            })
+        );
+
+        render(
+            <MemoryRouter initialEntries={['/personnel/1']}>
+            <Routes>
+                <Route path="/personnel/:id" element={<PersonnelDetail />} />
+            </Routes>
+            </MemoryRouter>
+        );
+
+        const message = await screen.findByText('Error 500: An unexpected error occurred.');
+        expect(message).toBeInTheDocument();
     });
 });
