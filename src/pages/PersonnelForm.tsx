@@ -46,8 +46,6 @@ export default function PersonnelForm() {
         .select('*')
         .eq('id', id)
         .single();
-      console.log('fetched data:', data);
-      console.log('error:', error);
       if (error) console.error(error);
       else setForm(data);
       setFetching(false);

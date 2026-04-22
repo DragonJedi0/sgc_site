@@ -6,6 +6,7 @@ import { supabase } from '../lib/supabase';
 import userEvent from '@testing-library/user-event';
 import PersonnelList from '../pages/PersonnelList';
 import { mockEntry, mockPersonnel } from '../lib/mockData';
+import { PATHS, ROUTES } from '../lib/paths';
 
 const user = userEvent.setup();
 
@@ -18,6 +19,11 @@ vi.mock('../lib/supabase', () => ({
 
 
 describe('PersonnelForm', () => {
+
+  beforeEach(() =>{
+    vi.resetAllMocks();
+  });
+
   it('should show empty fields for new entries', () =>{
     render(
         <MemoryRouter>
@@ -124,9 +130,9 @@ describe('PersonnelForm', () => {
     } as any);
 
     render(
-        <MemoryRouter initialEntries={['/personnel/1/edit']}>
+        <MemoryRouter initialEntries={[PATHS.PERSONNEL_EDIT(mockPersonnel[0].id)]}>
             <Routes>
-                <Route path="/personnel/:id/edit" element={<PersonnelForm />} />
+                <Route path={ROUTES.PERSONNEL_EDIT} element={<PersonnelForm />} />
             </Routes>
         </MemoryRouter>
     );
@@ -163,9 +169,9 @@ describe('PersonnelForm', () => {
     } as any);
 
     render(
-        <MemoryRouter initialEntries={['/personnel/2/edit']}>
+        <MemoryRouter initialEntries={[PATHS.PERSONNEL_EDIT(mockPersonnel[1].id)]}>
             <Routes>
-                <Route path="/personnel/:id/edit" element={<PersonnelForm />} />
+                <Route path={ROUTES.PERSONNEL_EDIT} element={<PersonnelForm />} />
             </Routes>
         </MemoryRouter>
     );
@@ -194,10 +200,10 @@ describe('PersonnelForm', () => {
         } as any);
 
     render(
-        <MemoryRouter initialEntries={['/personnel/2/edit']}>
+        <MemoryRouter initialEntries={[PATHS.PERSONNEL_EDIT(mockPersonnel[1].id)]}>
             <Routes>
-                <Route path="/personnel/:id/edit" element={<PersonnelForm />} />
-                <Route path="/" element={<PersonnelList />} />
+                <Route path={ROUTES.PERSONNEL_EDIT} element={<PersonnelForm />} />
+                <Route path={PATHS.PERSONNEL_LIST} element={<PersonnelList />} />
             </Routes>
         </MemoryRouter>
     );

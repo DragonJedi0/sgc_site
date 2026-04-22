@@ -8,18 +8,17 @@ import PersonnelDetail from '../../pages/PersonnelDetail';
 import userEvent from '@testing-library/user-event';
 import PersonnelForm from '../../pages/PersonnelForm';
 import { mockEntry } from '../../lib/mockData';
-import { handlers } from '../../mocks/handlers';
+import { PATHS, ROUTES } from '../../lib/paths';
 
 const user = userEvent.setup();
 
-
 describe('PersonnelForm (integration)', () => {
-    it('should show empty fields for new entries', async () =>{
+    it('navigates to add form and show empty fields for new entries', async () =>{
         render(
-            <MemoryRouter initialEntries={['/']}>
+            <MemoryRouter initialEntries={[PATHS.PERSONNEL_LIST]}>
                 <Routes>
-                    <Route path='/' element={<PersonnelList />} />
-                    <Route path="/personnel/new" element={<PersonnelForm />} />
+                    <Route path={PATHS.PERSONNEL_LIST} element={<PersonnelList />} />
+                    <Route path={PATHS.PERSONNEL_NEW} element={<PersonnelForm />} />
                 </Routes>
             </MemoryRouter>
         );
@@ -38,7 +37,7 @@ describe('PersonnelForm (integration)', () => {
         expect(screen.getByLabelText('Status')).toHaveValue('active'); 
     });
 
-    it('should insert values into database after clicking save', async () =>{
+    it('inserts values into database after clicking save then navigates to list view', async () =>{
         let body: unknown;
         
         server.use(
@@ -49,10 +48,10 @@ describe('PersonnelForm (integration)', () => {
         );
 
         render(
-            <MemoryRouter initialEntries={['/personnel/new']}>
+            <MemoryRouter initialEntries={[PATHS.PERSONNEL_NEW]}>
                 <Routes>
-                    <Route path="/personnel/new" element={<PersonnelForm />} />
-                    <Route path='/' element={<PersonnelList />} />
+                    <Route path={PATHS.PERSONNEL_NEW} element={<PersonnelForm />} />
+                    <Route path={PATHS.PERSONNEL_LIST} element={<PersonnelList />} />
                 </Routes>
             </MemoryRouter>
         );
@@ -76,9 +75,110 @@ describe('PersonnelForm (integration)', () => {
         expect(body).toMatchObject(mockEntry);
     });
 
-    it('should display error message when insert fails');
-    it('should convert empty prefix and rank to null on submit');
-    it('should show values of record to edit');
-    it('should update values into database after clicking save');
-    it('should navigate back to personnel list when cancelling');
+    it('should display error message when insert fails', async () =>{
+        server.use(
+            http.post(`${import.meta.env.VITE_SUPABASE_URL}/rest/v1/personnel`, () => {
+                return new HttpResponse(
+                JSON.stringify({ message: 'insert failed', code: '500' }),
+                { status: 500 }
+                );
+            })
+        );
+
+        render(
+            <MemoryRouter initialEntries={[PATHS.PERSONNEL_NEW]}>
+                <Routes>
+                    <Route path={PATHS.PERSONNEL_NEW} element={<PersonnelForm />} />
+                    <Route path={PATHS.PERSONNEL_LIST} element={<PersonnelList />} />
+                </Routes>
+            </MemoryRouter>
+        );
+
+        await user.type(screen.getByLabelText('First Name'), mockEntry.first_name);
+        await user.type(screen.getByLabelText('Last Name'), mockEntry.last_name);
+        await user.type(screen.getByLabelText('Role'), mockEntry.role);
+        await user.click(screen.getByText('Save'));
+
+        const error = await screen.findByText('insert failed');
+        expect(error).toBeInTheDocument();
+    });
+
+    it('converts empty prefix and rank to null on submit then navigates to list view', async () =>{
+        let body: unknown;
+        
+        server.use(
+            http.post(`${import.meta.env.VITE_SUPABASE_URL}/rest/v1/personnel`, async ({ request }) =>{
+            body = await request.json();
+            return HttpResponse.json([body], { status: 201 });
+            })
+        );
+
+        render(
+            <MemoryRouter initialEntries={[PATHS.PERSONNEL_NEW]}>
+                <Routes>
+                    <Route path={PATHS.PERSONNEL_NEW} element={<PersonnelForm />} />
+                    <Route path={PATHS.PERSONNEL_LIST} element={<PersonnelList />} />
+                </Routes>
+            </MemoryRouter>
+        );
+    
+        // Type into fields
+        await user.type(screen.getByLabelText('First Name'), mockEntry.first_name);
+        await user.type(screen.getByLabelText('Middle Name'), mockEntry.middle_name);
+        await user.type(screen.getByLabelText('Last Name'), mockEntry.last_name);
+        await user.type(screen.getByLabelText('Suffix'), mockEntry.suffix);
+        await user.type(screen.getByLabelText('Team'), mockEntry.team);
+        await user.type(screen.getByLabelText('Role'), mockEntry.role);
+            // Select dropdown value
+        await user.selectOptions(screen.getByLabelText('Personnel Type'), mockEntry.personnel_type);
+        await user.selectOptions(screen.getByLabelText('Status'), mockEntry.status);
+    
+        // click save
+        await user.click(screen.getByText('Save'));
+
+        expect(body).toMatchObject({
+            prefix: null,
+            first_name: mockEntry.first_name,
+            middle_name: mockEntry.middle_name,
+            last_name: mockEntry.last_name,
+            suffix: mockEntry.suffix,
+            personnel_type: mockEntry.personnel_type,
+            rank: null,
+            team: mockEntry.team,
+            role: mockEntry.role,
+            status: mockEntry.status,
+        });
+    });
+
+    it('navigates to edit form and show values of record to edit', async () =>{
+        render(
+            <MemoryRouter initialEntries={[PATHS.PERSONNEL_LIST]}>
+                <Routes>
+                    <Route path={PATHS.PERSONNEL_LIST} element={<PersonnelList />} />
+                    <Route path={ROUTES.PERSONNEL_DETAIL} element={<PersonnelDetail />} />
+                    <Route path={ROUTES.PERSONNEL_EDIT} element={<PersonnelForm />} />
+                </Routes>
+            </MemoryRouter>
+        );
+
+        const jack = await screen.findByText(/Col Jack O'Neill/);
+        await user.click(jack);
+
+        await user.click(await screen.findByText('Edit'));
+
+        expect(await screen.findByLabelText('Prefix')).toHaveValue("Mr.");
+        expect(await screen.findByLabelText('First Name')).toHaveValue("Jack");
+        expect(await screen.findByLabelText('Middle Name')).toHaveValue('');
+        expect(await screen.findByLabelText('Last Name')).toHaveValue("O'Neill");
+        expect(await screen.findByLabelText('Suffix')).toHaveValue('');
+        expect(await screen.findByLabelText('Rank')).toHaveValue('Colonel');
+        expect(await screen.findByLabelText('Team')).toHaveValue('SG-1');
+        expect(await screen.findByLabelText('Role')).toHaveValue('Team Leader');
+        expect(await screen.findByLabelText('Personnel Type')).toHaveValue("military");
+        expect(await screen.findByLabelText('Status')).toHaveValue('active');
+    });
+
+    it('updates values into database after clicking save then navigates to list view');
+
+    it('navigates back to personnel list when cancelling');
 });

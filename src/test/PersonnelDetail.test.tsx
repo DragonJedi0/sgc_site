@@ -5,7 +5,7 @@ import PersonnelDetail from '../pages/PersonnelDetail';
 import { supabase } from '../lib/supabase';
 import userEvent from '@testing-library/user-event';
 import { mockPersonnel } from '../lib/mockData';
-import { PERSONNEL_DETAIL } from '../lib/paths';
+import { PATHS, ROUTES } from '../lib/paths';
 
 const user = userEvent.setup();
 
@@ -30,9 +30,9 @@ describe('PersonnelDetail', () => {
         } as any);
 
         render(
-          <MemoryRouter initialEntries={['/personnel/1']}>
+          <MemoryRouter initialEntries={[PATHS.PERSONNEL_DETAIL(mockPersonnel[0].id)]}>
             <Routes>
-              <Route path={PERSONNEL_DETAIL} element={<PersonnelDetail />} />
+              <Route path={ROUTES.PERSONNEL_DETAIL} element={<PersonnelDetail />} />
             </Routes>
           </MemoryRouter>
         );
@@ -54,9 +54,9 @@ describe('PersonnelDetail', () => {
       } as any);
 
       render(
-        <MemoryRouter initialEntries={['/personnel/1']}>
+        <MemoryRouter initialEntries={[PATHS.PERSONNEL_DETAIL(mockPersonnel[0].id)]}>
           <Routes>
-            <Route path={PERSONNEL_DETAIL} element={<PersonnelDetail />} />
+            <Route path={ROUTES.PERSONNEL_DETAIL} element={<PersonnelDetail />} />
           </Routes>
         </MemoryRouter>
       );
@@ -75,9 +75,9 @@ describe('PersonnelDetail', () => {
       } as any);
 
       render(
-        <MemoryRouter initialEntries={['/personnel/1']}>
+        <MemoryRouter initialEntries={[PATHS.PERSONNEL_DETAIL(mockPersonnel[0].id)]}>
           <Routes>
-            <Route path={PERSONNEL_DETAIL} element={<PersonnelDetail />} />
+            <Route path={ROUTES.PERSONNEL_DETAIL} element={<PersonnelDetail />} />
           </Routes>
         </MemoryRouter>
       );
@@ -114,9 +114,9 @@ describe('PersonnelDetail', () => {
       } as any);
 
       render(
-        <MemoryRouter initialEntries={['/personnel/3']}>
+        <MemoryRouter initialEntries={[PATHS.PERSONNEL_DETAIL(mockPersonnel[2].id)]}>
           <Routes>
-            <Route path={PERSONNEL_DETAIL} element={<PersonnelDetail />} />
+            <Route path={PATHS.PERSONNEL_DETAIL(mockPersonnel[2].id)} element={<PersonnelDetail />} />
           </Routes>
         </MemoryRouter>
       );
@@ -138,9 +138,9 @@ describe('PersonnelDetail', () => {
       vi.spyOn(window, 'confirm').mockReturnValueOnce(false);
 
       render(
-        <MemoryRouter initialEntries={['/personnel/3']}>
+        <MemoryRouter initialEntries={[PATHS.PERSONNEL_DETAIL(mockPersonnel[2].id)]}>
           <Routes>
-            <Route path={PERSONNEL_DETAIL} element={<PersonnelDetail />} />
+            <Route path={PATHS.PERSONNEL_DETAIL(mockPersonnel[2].id)} element={<PersonnelDetail />} />
           </Routes>
         </MemoryRouter>
       );

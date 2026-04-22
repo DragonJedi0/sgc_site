@@ -7,7 +7,7 @@ import { server } from '../../mocks/server';
 import PersonnelDetail from '../../pages/PersonnelDetail';
 import userEvent from '@testing-library/user-event';
 import PersonnelForm from '../../pages/PersonnelForm';
-import { PERSONNEL_DETAIL, PERSONNEL_DETAIL_EDIT, PERSONNEL_LIST } from '../../lib/paths';
+import { PERSONNEL_DETAIL, PERSONNEL_EDIT_PATH, PERSONNEL_LIST } from '../../lib/paths';
 
 const user = userEvent.setup();
 
@@ -91,7 +91,7 @@ describe('PersonnelDetail (integration)', () => {
         <MemoryRouter initialEntries={['/personnel/2']}>
             <Routes>
                 <Route path={PERSONNEL_DETAIL} element={<PersonnelDetail />} />
-                <Route path={PERSONNEL_DETAIL_EDIT} element={<PersonnelForm />} />
+                <Route path={PERSONNEL_EDIT_PATH} element={<PersonnelForm />} />
             </Routes>
         </MemoryRouter>
         );
