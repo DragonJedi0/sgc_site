@@ -28,7 +28,7 @@ export const mockPersonnel = [
     },
     {
         id: '2',
-        rank: '',
+        rank: null,
         role: 'Archeology Expert',
         team: 'SG-1',
         status: 'active',
@@ -54,7 +54,7 @@ export const mockPersonnel = [
     },
     {
         id: '4',
-        rank: '',
+        rank: null,
         role: 'Computer Expert',
         team: 'SG-2',
         status: 'active',
@@ -78,4 +78,17 @@ export const mockPersonnel = [
         suffix: '',
         personnel_type: 'military'
     },
+    {
+        id: '6',
+        rank: null,
+        role: 'Combat Expert',
+        team: 'SG-1',
+        status: 'active',
+        prefix: null,
+        first_name: "Teal'c",
+        middle_name: '',
+        last_name: null,
+        suffix: '',
+        personnel_type: 'civilian'
+    }
 ];

@@ -7,8 +7,9 @@ import { server } from '../../mocks/server';
 import PersonnelDetail from '../../pages/PersonnelDetail';
 import userEvent from '@testing-library/user-event';
 import PersonnelForm from '../../pages/PersonnelForm';
-import { mockEntry } from '../../lib/mockData';
+import { mockEntry, mockPersonnel } from '../../lib/mockData';
 import { PATHS, ROUTES } from '../../lib/paths';
+import { setupPostCapture, setupPatchCapture, PERSONNEL } from '../testUtils';
 
 const user = userEvent.setup();
 
@@ -38,14 +39,7 @@ describe('PersonnelForm (integration)', () => {
     });
 
     it('inserts values into database after clicking save then navigates to list view', async () =>{
-        let body: unknown;
-        
-        server.use(
-            http.post(`${import.meta.env.VITE_SUPABASE_URL}/rest/v1/personnel`, async ({ request }) =>{
-            body = await request.json();
-            return HttpResponse.json([body], { status: 201 });
-            })
-        );
+        const body = setupPostCapture(PERSONNEL);
 
         render(
             <MemoryRouter initialEntries={[PATHS.PERSONNEL_NEW]}>
@@ -72,7 +66,7 @@ describe('PersonnelForm (integration)', () => {
         // click save
         await user.click(screen.getByText('Save'));
 
-        expect(body).toMatchObject(mockEntry);
+        expect(body()).toMatchObject(mockEntry);
     });
 
     it('should display error message when insert fails', async () =>{
@@ -104,14 +98,7 @@ describe('PersonnelForm (integration)', () => {
     });
 
     it('converts empty prefix and rank to null on submit then navigates to list view', async () =>{
-        let body: unknown;
-        
-        server.use(
-            http.post(`${import.meta.env.VITE_SUPABASE_URL}/rest/v1/personnel`, async ({ request }) =>{
-            body = await request.json();
-            return HttpResponse.json([body], { status: 201 });
-            })
-        );
+        const body = setupPostCapture(PERSONNEL);
 
         render(
             <MemoryRouter initialEntries={[PATHS.PERSONNEL_NEW]}>
@@ -136,7 +123,7 @@ describe('PersonnelForm (integration)', () => {
         // click save
         await user.click(screen.getByText('Save'));
 
-        expect(body).toMatchObject({
+        expect(body()).toMatchObject({
             prefix: null,
             first_name: mockEntry.first_name,
             middle_name: mockEntry.middle_name,
@@ -178,7 +165,73 @@ describe('PersonnelForm (integration)', () => {
         expect(await screen.findByLabelText('Status')).toHaveValue('active');
     });
 
-    it('updates values into database after clicking save then navigates to list view');
+    it('updates values into database after clicking save then navigates to list view', async () =>{
+        const body = setupPatchCapture(PERSONNEL);
+        
+        render(
+            <MemoryRouter initialEntries={[PATHS.PERSONNEL_LIST]}>
+                <Routes>
+                    <Route path={PATHS.PERSONNEL_LIST} element={<PersonnelList />} />
+                    <Route path={ROUTES.PERSONNEL_DETAIL} element={<PersonnelDetail />} />
+                    <Route path={ROUTES.PERSONNEL_EDIT} element={<PersonnelForm />} />
+                </Routes>
+            </MemoryRouter>
+        );
 
-    it('navigates back to personnel list when cancelling');
+        // Navigate to detailed page
+        const daniel = await screen.findByText(/Dr. Daniel Jackson PHD/);
+        await user.click(daniel);
+
+        // Navigate to edit page
+        await user.click(await screen.findByText('Edit'));
+
+        // Update and save
+        await user.selectOptions(await screen.findByLabelText('Status'), "kia");
+        await user.click(screen.getByText('Save'));
+
+        // Test
+        const heading = await screen.findByText('SGC Personnel');
+        expect(heading).toBeInTheDocument();
+        expect(body()).toMatchObject({
+            id: mockPersonnel[1].id,
+            prefix: mockPersonnel[1].prefix,
+            first_name: mockPersonnel[1].first_name,
+            middle_name: mockPersonnel[1].middle_name,
+            last_name: mockPersonnel[1].last_name,
+            suffix: mockPersonnel[1].suffix,
+            personnel_type: mockPersonnel[1].personnel_type,
+            rank: mockPersonnel[1].rank,
+            team: mockPersonnel[1].team,
+            role: mockPersonnel[1].role,
+            status: "kia",
+        });
+    });
+
+    it('navigates back to personnel list when cancelling', async () =>{
+        render(
+            <MemoryRouter initialEntries={[PATHS.PERSONNEL_LIST]}>
+                <Routes>
+                    <Route path={PATHS.PERSONNEL_LIST} element={<PersonnelList />} />
+                    <Route path={ROUTES.PERSONNEL_DETAIL} element={<PersonnelDetail />} />
+                    <Route path={ROUTES.PERSONNEL_EDIT} element={<PersonnelForm />} />
+                </Routes>
+            </MemoryRouter>
+        );
+
+        // Navigate to detailed page
+        const daniel = await screen.findByText(/Dr. Daniel Jackson PHD/);
+        await user.click(daniel);
+
+        // Navigate to edit page
+        await user.click(await screen.findByText('Edit'));
+
+        // Cancel Update
+        await user.click(screen.getByText('Cancel'));
+
+        // Test
+        const heading = await screen.findByText('SGC Personnel');
+        const danielAfterNav = await screen.findByText(/Dr. Daniel Jackson PHD/);
+        expect(heading).toBeInTheDocument();
+        expect(danielAfterNav).toBeInTheDocument();
+    });
 });

@@ -1,25 +1,25 @@
 import { http, HttpResponse } from 'msw';
 import { mockPersonnel } from '../lib/mockData';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+export const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+
+function createCrudHandlers(resource: string, mockData: Record<string, unknown>[]){
+  return [
+    http.get(`${supabaseUrl}/rest/v1/${resource}`, ({ request }) =>{
+      const url = new URL(request.url);
+      const id = url.searchParams.get('id'); // 'id' => `eq.${id}`
+      const index = id ? Number(id.slice(3)) - 1 : 0;
+      if (id) return HttpResponse.json(mockData[index]);
+      return HttpResponse.json(mockData);
+    }),
+    http.delete(`${supabaseUrl}/rest/v1/${resource}`, () =>{
+      return HttpResponse.json({});
+    }),
+  ];
+}
 
 export const handlers = [
-  http.get(`${supabaseUrl}/rest/v1/personnel`, ({ request }) => {
-    const url = new URL(request.url);
-    const id = url.searchParams.get('id'); // 'id' => 'eq.{id}'
-    const index = id ? Number(id.slice(3)) - 1 : 0;
-
-    if(id) return HttpResponse.json(mockPersonnel[index]);
-
-    return HttpResponse.json(mockPersonnel);
-  }),
-
-  http.delete(`${supabaseUrl}/rest/v1/personnel`, () =>{
-    return HttpResponse.json({});
-  }),
-
-  http.patch(`${supabaseUrl}/request/v1/personnel`, async ({ request }) =>{
-    const body = await request.json();
-    return HttpResponse.json([body], { status: 200 });
-  }),
+  ...createCrudHandlers('personnel', mockPersonnel),
+  // ...createCrudHandlers('teams', mockTeams);
+  // ...createCrudHandlers('missions', mockMissions);
 ];
