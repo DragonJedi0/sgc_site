@@ -7,16 +7,17 @@ import { server } from '../../mocks/server';
 import PersonnelDetail from '../../pages/PersonnelDetail';
 import userEvent from '@testing-library/user-event';
 import PersonnelForm from '../../pages/PersonnelForm';
-import { PERSONNEL_DETAIL, PERSONNEL_EDIT_PATH, PERSONNEL_LIST } from '../../lib/paths';
+import { PATHS, ROUTES } from '../../lib/paths';
+import { mockPersonnel } from '../../lib/mockData';
 
 const user = userEvent.setup();
 
 describe('PersonnelDetail (integration)', () => {
     it('fetches and displays detailed military personnel record from the API', async () =>{
         render(
-            <MemoryRouter initialEntries={['/personnel/3']}>
+            <MemoryRouter initialEntries={[PATHS.PERSONNEL_DETAIL(mockPersonnel[2].id)]}>
             <Routes>
-                <Route path={PERSONNEL_DETAIL} element={<PersonnelDetail />} />
+                <Route path={ROUTES.PERSONNEL_DETAIL} element={<PersonnelDetail />} />
             </Routes>
             </MemoryRouter>
         );
@@ -35,9 +36,9 @@ describe('PersonnelDetail (integration)', () => {
     
     it('fetches and displays detailed civilian personnel record from the API', async () =>{
         render(
-            <MemoryRouter initialEntries={['/personnel/4']}>
+            <MemoryRouter initialEntries={[PATHS.PERSONNEL_DETAIL(mockPersonnel[3].id)]}>
             <Routes>
-                <Route path={PERSONNEL_DETAIL} element={<PersonnelDetail />} />
+                <Route path={ROUTES.PERSONNEL_DETAIL} element={<PersonnelDetail />} />
             </Routes>
             </MemoryRouter>
         );
@@ -56,9 +57,9 @@ describe('PersonnelDetail (integration)', () => {
 
     it('fetches and displays broken personnel record from the API successfully', async () =>{
         render(
-            <MemoryRouter initialEntries={['/personnel/5']}>
+            <MemoryRouter initialEntries={[PATHS.PERSONNEL_DETAIL(mockPersonnel[4].id)]}>
             <Routes>
-                <Route path={PERSONNEL_DETAIL} element={<PersonnelDetail />} />
+                <Route path={ROUTES.PERSONNEL_DETAIL} element={<PersonnelDetail />} />
             </Routes>
             </MemoryRouter>
         );
@@ -77,7 +78,7 @@ describe('PersonnelDetail (integration)', () => {
         render(
         <MemoryRouter initialEntries={['/personnel/0']}>
             <Routes>
-                <Route path={PERSONNEL_DETAIL} element={<PersonnelDetail />} />
+                <Route path={ROUTES.PERSONNEL_DETAIL} element={<PersonnelDetail />} />
             </Routes>
         </MemoryRouter>
         );
@@ -90,8 +91,8 @@ describe('PersonnelDetail (integration)', () => {
         render(
         <MemoryRouter initialEntries={['/personnel/2']}>
             <Routes>
-                <Route path={PERSONNEL_DETAIL} element={<PersonnelDetail />} />
-                <Route path={PERSONNEL_EDIT_PATH} element={<PersonnelForm />} />
+                <Route path={ROUTES.PERSONNEL_DETAIL} element={<PersonnelDetail />} />
+                <Route path={ROUTES.PERSONNEL_EDIT} element={<PersonnelForm />} />
             </Routes>
         </MemoryRouter>
         );
@@ -104,10 +105,10 @@ describe('PersonnelDetail (integration)', () => {
 
     it('navigates to the list view when clicking back', async () =>{
         render(
-        <MemoryRouter initialEntries={['/personnel/2']}>
+        <MemoryRouter initialEntries={[PATHS.PERSONNEL_DETAIL(mockPersonnel[1].id)]}>
             <Routes>
-                <Route path={PERSONNEL_DETAIL} element={<PersonnelDetail />} />
-                <Route path={PERSONNEL_LIST} element={<PersonnelList />} />
+                <Route path={ROUTES.PERSONNEL_DETAIL} element={<PersonnelDetail />} />
+                <Route path={PATHS.PERSONNEL_LIST} element={<PersonnelList />} />
             </Routes>
         </MemoryRouter>
         );
@@ -122,10 +123,10 @@ describe('PersonnelDetail (integration)', () => {
         vi.spyOn(window, 'confirm').mockReturnValueOnce(true);
 
         render(
-        <MemoryRouter initialEntries={['/personnel/5']}>
+        <MemoryRouter initialEntries={[PATHS.PERSONNEL_DETAIL(mockPersonnel[4].id)]}>
             <Routes>
-                <Route path={PERSONNEL_DETAIL} element={<PersonnelDetail />} />
-                <Route path={PERSONNEL_LIST} element={<PersonnelList />} />
+                <Route path={ROUTES.PERSONNEL_DETAIL} element={<PersonnelDetail />} />
+                <Route path={PATHS.PERSONNEL_LIST} element={<PersonnelList />} />
             </Routes>
         </MemoryRouter>
         );
@@ -144,9 +145,9 @@ describe('PersonnelDetail (integration)', () => {
         );
 
         render(
-            <MemoryRouter initialEntries={['/personnel/1']}>
+            <MemoryRouter initialEntries={[PATHS.PERSONNEL_DETAIL(mockPersonnel[0].id)]}>
             <Routes>
-                <Route path={PERSONNEL_DETAIL} element={<PersonnelDetail />} />
+                <Route path={ROUTES.PERSONNEL_DETAIL} element={<PersonnelDetail />} />
             </Routes>
             </MemoryRouter>
         );
