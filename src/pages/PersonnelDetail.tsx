@@ -75,7 +75,7 @@ export default function PersonnelDetail() {
       <p>{person.personnel_type == 'civilian' ? 'Civilian Contractor' : person.rank ? `Rank: ${person.rank}` : 'N/A' }</p>
       <p>Team: {person.team ?? 'Unassigned'}</p>
       <p>Role: {person.role}</p>
-      <p>Status: {person.status}</p>
+      <p>Status: {person.status === "medical_leave" ? "Medical Leave" : `${person.status}`}</p>
       <button onClick={() => navigate('/')}>Back</button>
       <button onClick={() => navigate(`/personnel/${person.id}/edit`)}>Edit</button>
       <button onClick={handleDelete}>Delete</button>
