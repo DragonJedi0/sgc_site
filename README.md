@@ -73,7 +73,7 @@ src/
 - [x] Personnel CRUD
 - [x] Unit tests
 - [x] CI/CD pipeline
-- [ ] Integration tests with MSW
+- [x] Integration tests with MSW
 - [ ] E2E tests with Playwright
 - [ ] Teams management
 - [ ] Mission records
