@@ -82,6 +82,16 @@ test('edit button navigates to form with pre-populated data', async ({ page }) =
     await page.getByRole('button', { name: 'Edit' }).click();
 
     //Assertions...
+    await expect(page.getByLabel('Prefix')).toHaveValue('Mr.');
+    await expect(page.getByLabel('First Name')).toHaveValue('Jack');
+    await expect(page.getByLabel('Middle Name')).toHaveValue('');
+    await expect(page.getByLabel('Last Name')).toHaveValue("O'Neill");
+    await expect(page.getByLabel('Suffix')).toHaveValue('');
+    await expect(page.getByLabel('Rank')).toHaveValue('Colonel');
+    await expect(page.getByLabel('Role')).toHaveValue('Team Leader');
+    await expect(page.getByLabel('Team')).toHaveValue('SG-1');
+    await expect(page.getByLabel('Personnel Type')).toHaveValue('military');
+    await expect(page.getByLabel('Status')).toHaveValue('active');
 });
 
 test('cancel button on edit form returns to list view', async ({ page }) =>{
