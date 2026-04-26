@@ -113,14 +113,23 @@ test('Add Personnel button navigates to empty form', async ({ page }) =>{
 
     await page.getByRole('button', { name: 'Add Personnel' }).click();
 
-    // Read empty fields
-
     // Assertions...
     await expect(page).toHaveURL(PATHS.PERSONNEL_NEW);
     await expect(page.getByText('Add Personnel')).toBeVisible();
+    await expect(page.getByLabel('Status')).toHaveValue('active');
 });
 
-// Cancel on new form returns to list
+test('new form cancel button returns to list view', async ({ page }) =>{
+    await page.goto(PATHS.PERSONNEL_LIST);
+
+    await page.getByRole('button', { name: 'Add Personnel' }).click();
+
+    await page.getByRole('button', { name: 'Cancel' }).click();
+
+    await expect(page).toHaveURL(PATHS.PERSONNEL_LIST);
+    await expect(page.getByText('SGC Personnel')).toBeVisible();
+    await expect(page.getByText(/Col Jack O'Neill/)).toBeVisible();
+});
 
 // Saving a new record navigates to list
 
