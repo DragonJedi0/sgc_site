@@ -92,3 +92,55 @@ export const mockPersonnel = [
         personnel_type: 'civilian'
     }
 ];
+
+export const e2eTestRecords = {
+    e2eTestRec : mockEntry,
+    e2eTestRec2: {
+        rank: 'Major',
+        role: 'Combat Support',
+        team: 'SG-2',
+        status: 'kia',
+        prefix: 'Mr.',
+        first_name: 'Carl',
+        middle_name: 'John',
+        last_name: 'Baker',
+        suffix: 'III',
+        personnel_type: 'military'
+    },
+    e2eTestRec3 : {
+        rank: null,
+        role: 'Computer Expert',
+        team: 'SG-2',
+        status: 'inactive',
+        prefix: 'Dr.',
+        first_name: 'Samantha',
+        middle_name: 'Alexandra',
+        last_name: 'Shepard',
+        suffix: 'PHD',
+        personnel_type: 'civilian'
+    },
+    e2eTestMilitary: {
+        rank: 'Airman Basic',
+        role: 'Test Role',
+        team: 'Test Team',
+        status: 'active',
+        prefix: 'Mr.',
+        first_name: 'E2E',
+        middle_name: 'Full',
+        last_name: 'Test',
+        suffix: 'Tester',
+        personnel_type: 'military'
+    },
+    e2eTestCivilian : {
+        rank: null,
+        role: 'Test Role',
+        team: 'Test Team',
+        status: 'active',
+        prefix: 'Dr.',
+        first_name: 'E2E',
+        middle_name: 'Full',
+        last_name: 'Test',
+        suffix: 'PHD',
+        personnel_type: 'civilian'
+    }
+}
