@@ -3,6 +3,7 @@ import PersonnelList from './pages/PersonnelList';
 import PersonnelDetail from './pages/PersonnelDetail';
 import PersonnelForm from './pages/PersonnelForm';
 import { PATHS, ROUTES } from './lib/paths';
+import './App.css';
 
 function App() {
   return (

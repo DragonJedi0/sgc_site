@@ -98,82 +98,113 @@ export default function PersonnelForm() {
       <h1>{isEditing ? 'Edit Personnel' : 'Add Personnel'}</h1>
       {submitError && <p style={{ color: 'red' }}>{submitError}</p>}
       <form onSubmit={handleSubmit}>
-        <label htmlFor="prefix">Prefix</label>
-          <select id="prefix" name="prefix" value={form.prefix} onChange={handleChange}>
-            <option value="">None</option>
-            <option value="Mr.">Mr.</option>
-            <option value="Ms.">Ms.</option>
-            <option value="Mrs.">Mrs.</option>
-            <option value="Dr.">Dr.</option>
-          </select>
+        <div className="form-row-3">
+          <div className="form-group">
+            <label htmlFor="prefix">Prefix: </label>
+            <select id="prefix" name="prefix" value={form.prefix} onChange={handleChange}>
+              <option value="">None</option>
+              <option value="Mr.">Mr.</option>
+              <option value="Ms.">Ms.</option>
+              <option value="Mrs.">Mrs.</option>
+              <option value="Dr.">Dr.</option>
+            </select>
+          </div>
 
-          <label htmlFor="first_name">First Name</label>
-          <input id="first_name" name="first_name" value={form.first_name} onChange={handleChange} required />
+          <div className="form-group">
+            <label htmlFor="first_name">First Name: </label>
+            <input id="first_name" name="first_name" value={form.first_name} onChange={handleChange} required />
+          </div>
 
-          <label htmlFor="middle_name">Middle Name</label>
-          <input id="middle_name" name="middle_name" value={form.middle_name} onChange={handleChange} />
+          <div className="form-group">
+            <label htmlFor="middle_name">Middle Name: </label>
+            <input id="middle_name" name="middle_name" value={form.middle_name} onChange={handleChange} />
+          </div>
+        </div>
 
-          <label htmlFor="last_name">Last Name</label>
-          <input id="last_name" name="last_name" value={form.last_name} onChange={handleChange} required />
+        <div className="form-row-3">
+          <div className="form-group">
+            <label htmlFor="last_name">Last Name: </label>
+            <input id="last_name" name="last_name" value={form.last_name} onChange={handleChange} required />
+          </div>
 
-          <label htmlFor="suffix">Suffix</label>
-          <input id="suffix" name="suffix" value={form.suffix} onChange={handleChange} />
+          <div className="form-group">
+            <label htmlFor="suffix">Suffix: </label>
+            <input id="suffix" name="suffix" value={form.suffix} onChange={handleChange} />
+          </div>
+        </div>
 
-          <label htmlFor="rank">Rank</label>
-          <select id="rank" name="rank" value={form.rank} onChange={handleChange}>
-            <option value="">None</option>
-            <option value="Airman Basic">Airman Basic</option>
-            <option value="Airman">Airman</option>
-            <option value="Airman First Class">Airman First Class</option>
-            <option value="Senior Airman">Senior Airman</option>
-            <option value="Staff Sergeant">Staff Sergeant</option>
-            <option value="Technical Sergeant">Technical Sergeant</option>
-            <option value="Master Sergeant">Master Sergeant</option>
-            <option value="Senior Master Sergeant">Senior Master Sergeant</option>
-            <option value="Chief Master Sergeant">Chief Master Sergeant</option>
-            <option value="Command Chief Master Sergeant">Command Chief Master Sergeant</option>
-            <option value="Chief Master Sergeant of the Air Force">Chief Master Sergeant of the Air Force</option>
-            <option value="Second Lieutenant">Second Lieutenant</option>
-            <option value="First Lieutenant">First Lieutenant</option>
-            <option value="Captain">Captain</option>
-            <option value="Major">Major</option>
-            <option value="Lieutenant Colonel">Lieutenant Colonel</option>
-            <option value="Colonel">Colonel</option>
-            <option value="Brigadier General">Brigadier General</option>
-            <option value="Major General">Major General</option>
-            <option value="Lieutenant General">Lieutenant General</option>
-            <option value="General">General</option>
-            <option value="General of the Air Force">General of the Air Force</option>
-          </select>
+        <div className="form-row-3">
+          <div className="form-group">
+            <label htmlFor="rank">Rank: </label>
+            <select id="rank" name="rank" value={form.rank} onChange={handleChange}>
+              <option value="">None</option>
+              <option value="Airman Basic">Airman Basic</option>
+              <option value="Airman">Airman</option>
+              <option value="Airman First Class">Airman First Class</option>
+              <option value="Senior Airman">Senior Airman</option>
+              <option value="Staff Sergeant">Staff Sergeant</option>
+              <option value="Technical Sergeant">Technical Sergeant</option>
+              <option value="Master Sergeant">Master Sergeant</option>
+              <option value="Senior Master Sergeant">Senior Master Sergeant</option>
+              <option value="Chief Master Sergeant">Chief Master Sergeant</option>
+              <option value="Command Chief Master Sergeant">Command Chief Master Sergeant</option>
+              <option value="Chief Master Sergeant of the Air Force">Chief Master Sergeant of the Air Force</option>
+              <option value="Second Lieutenant">Second Lieutenant</option>
+              <option value="First Lieutenant">First Lieutenant</option>
+              <option value="Captain">Captain</option>
+              <option value="Major">Major</option>
+              <option value="Lieutenant Colonel">Lieutenant Colonel</option>
+              <option value="Colonel">Colonel</option>
+              <option value="Brigadier General">Brigadier General</option>
+              <option value="Major General">Major General</option>
+              <option value="Lieutenant General">Lieutenant General</option>
+              <option value="General">General</option>
+              <option value="General of the Air Force">General of the Air Force</option>
+            </select>
+          </div>
 
-          <label htmlFor="role">Role</label>
-          <input id="role" name="role" value={form.role} onChange={handleChange} required />
+          <div className="form-group">
+            <label htmlFor="role">Role: </label>
+            <input id="role" name="role" value={form.role} onChange={handleChange} required />
+          </div>
 
-          <label htmlFor="team">Team</label>
-          <input id="team" name="team" value={form.team} onChange={handleChange} />
+          <div className="form-group">
+            <label htmlFor="team">Team: </label>
+            <input id="team" name="team" value={form.team} onChange={handleChange} />
+          </div>
+        </div>
 
-          <label htmlFor="personnel_type">Personnel Type</label>
-          <select id="personnel_type" name="personnel_type" value={form.personnel_type} onChange={handleChange}>
-            <option value="military">Military</option>
-            <option value="civilian">Civilian</option>
-          </select>
+        <div className="form-row-3">
+          <div className="form-group">
+            <label htmlFor="personnel_type">Personnel Type: </label>
+            <select id="personnel_type" name="personnel_type" value={form.personnel_type} onChange={handleChange}>
+              <option value="military">Military</option>
+              <option value="civilian">Civilian</option>
+            </select>
+          </div>
 
-          <label htmlFor="status">Status</label>
-          <select id="status" name="status" value={form.status} onChange={handleChange}>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-            <option value="mia">MIA</option>
-            <option value="kia">KIA</option>
-            <option value="deceased">Deceased</option>
-            <option value="retired">Retired</option>
-            <option value="transferred">Transferred</option>
-            <option value="medical_leave">Medical Leave</option>
-            <option value="suspended">Suspended</option>
-          </select>
-        <button type="submit" disabled={loading}>
-          {loading ? 'Saving...' : 'Save'}
-        </button>
-        <button type="button" onClick={() => navigate('/')}>Cancel</button>
+          <div className="form-group">
+            <label htmlFor="status">Status: </label>
+            <select id="status" name="status" value={form.status} onChange={handleChange}>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+              <option value="mia">MIA</option>
+              <option value="kia">KIA</option>
+              <option value="deceased">Deceased</option>
+              <option value="retired">Retired</option>
+              <option value="transferred">Transferred</option>
+              <option value="medical_leave">Medical Leave</option>
+              <option value="suspended">Suspended</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="form-actions">
+          <button type="submit" disabled={loading}>
+            {loading ? 'Saving...' : 'Save'}
+          </button>
+          <button type="button" onClick={() => navigate('/')}>Cancel</button>
+        </div>
       </form>
     </div>
   );

@@ -31,16 +31,16 @@ describe('PersonnelForm', () => {
         </MemoryRouter>
     );
 
-    expect(screen.getByLabelText('Prefix')).toHaveValue('');
-    expect(screen.getByLabelText('First Name')).toHaveValue('');
-    expect(screen.getByLabelText('Middle Name')).toHaveValue('');
-    expect(screen.getByLabelText('Last Name')).toHaveValue('');
-    expect(screen.getByLabelText('Suffix')).toHaveValue('');
-    expect(screen.getByLabelText('Rank')).toHaveValue('');
-    expect(screen.getByLabelText('Team')).toHaveValue('');
-    expect(screen.getByLabelText('Role')).toHaveValue('');
-    expect(screen.getByLabelText('Personnel Type')).toHaveValue('military');
-    expect(screen.getByLabelText('Status')).toHaveValue('active');
+    expect(screen.getByLabelText('Prefix:')).toHaveValue('');
+    expect(screen.getByLabelText('First Name:')).toHaveValue('');
+    expect(screen.getByLabelText('Middle Name:')).toHaveValue('');
+    expect(screen.getByLabelText('Last Name:')).toHaveValue('');
+    expect(screen.getByLabelText('Suffix:')).toHaveValue('');
+    expect(screen.getByLabelText('Rank:')).toHaveValue('');
+    expect(screen.getByLabelText('Team:')).toHaveValue('');
+    expect(screen.getByLabelText('Role:')).toHaveValue('');
+    expect(screen.getByLabelText('Personnel Type:')).toHaveValue('military');
+    expect(screen.getByLabelText('Status:')).toHaveValue('active');
   });
 
   it('should insert values into database after clicking save', async () => {
@@ -58,17 +58,17 @@ describe('PersonnelForm', () => {
     );
 
     // Type into fields
-    await user.type(screen.getByLabelText('First Name'), mockEntry.first_name);
-    await user.type(screen.getByLabelText('Middle Name'), mockEntry.middle_name);
-    await user.type(screen.getByLabelText('Last Name'), mockEntry.last_name);
-    await user.type(screen.getByLabelText('Suffix'), mockEntry.suffix);
-    await user.type(screen.getByLabelText('Team'), mockEntry.team);
-    await user.type(screen.getByLabelText('Role'), mockEntry.role);
+    await user.type(screen.getByLabelText('First Name:'), mockEntry.first_name);
+    await user.type(screen.getByLabelText('Middle Name:'), mockEntry.middle_name);
+    await user.type(screen.getByLabelText('Last Name:'), mockEntry.last_name);
+    await user.type(screen.getByLabelText('Suffix:'), mockEntry.suffix);
+    await user.type(screen.getByLabelText('Team:'), mockEntry.team);
+    await user.type(screen.getByLabelText('Role:'), mockEntry.role);
       // Select dropdown value
-    await user.selectOptions(screen.getByLabelText('Rank'), mockEntry.rank);
-    await user.selectOptions(screen.getByLabelText('Prefix'), mockEntry.prefix);
-    await user.selectOptions(screen.getByLabelText('Personnel Type'), mockEntry.personnel_type);
-    await user.selectOptions(screen.getByLabelText('Status'), mockEntry.status);
+    await user.selectOptions(screen.getByLabelText('Rank:'), mockEntry.rank);
+    await user.selectOptions(screen.getByLabelText('Prefix:'), mockEntry.prefix);
+    await user.selectOptions(screen.getByLabelText('Personnel Type:'), mockEntry.personnel_type);
+    await user.selectOptions(screen.getByLabelText('Status:'), mockEntry.status);
 
     // click save
     await user.click(screen.getByText('Save'));
@@ -88,9 +88,9 @@ describe('PersonnelForm', () => {
       </MemoryRouter>
     );
 
-    await user.type(screen.getByLabelText('First Name'), mockEntry.first_name);
-    await user.type(screen.getByLabelText('Last Name'), mockEntry.last_name);
-    await user.type(screen.getByLabelText('Role'), mockEntry.role);
+    await user.type(screen.getByLabelText('First Name:'), mockEntry.first_name);
+    await user.type(screen.getByLabelText('Last Name:'), mockEntry.last_name);
+    await user.type(screen.getByLabelText('Role:'), mockEntry.role);
     await user.click(screen.getByText('Save'));
 
     const error = await screen.findByText('insert failed');
@@ -110,9 +110,9 @@ describe('PersonnelForm', () => {
       </MemoryRouter>
     );
 
-    await user.type(screen.getByLabelText('First Name'), mockEntry.first_name);
-    await user.type(screen.getByLabelText('Last Name'), mockEntry.last_name);
-    await user.type(screen.getByLabelText('Role'), mockEntry.role);
+    await user.type(screen.getByLabelText('First Name:'), mockEntry.first_name);
+    await user.type(screen.getByLabelText('Last Name:'), mockEntry.last_name);
+    await user.type(screen.getByLabelText('Role:'), mockEntry.role);
     await user.click(screen.getByText('Save'));
 
     expect(insertMock).toHaveBeenCalledWith(
@@ -137,16 +137,16 @@ describe('PersonnelForm', () => {
         </MemoryRouter>
     );
 
-    expect(await screen.findByLabelText('Prefix')).toHaveValue("Mr.");
-    expect(await screen.findByLabelText('First Name')).toHaveValue("Jack");
-    expect(await screen.findByLabelText('Middle Name')).toHaveValue('');
-    expect(await screen.findByLabelText('Last Name')).toHaveValue("O'Neill");
-    expect(await screen.findByLabelText('Suffix')).toHaveValue('');
-    expect(await screen.findByLabelText('Rank')).toHaveValue('Colonel');
-    expect(await screen.findByLabelText('Team')).toHaveValue('SG-1');
-    expect(await screen.findByLabelText('Role')).toHaveValue('Team Leader');
-    expect(await screen.findByLabelText('Personnel Type')).toHaveValue("military");
-    expect(await screen.findByLabelText('Status')).toHaveValue('active');
+    expect(await screen.findByLabelText('Prefix:')).toHaveValue("Mr.");
+    expect(await screen.findByLabelText('First Name:')).toHaveValue("Jack");
+    expect(await screen.findByLabelText('Middle Name:')).toHaveValue('');
+    expect(await screen.findByLabelText('Last Name:')).toHaveValue("O'Neill");
+    expect(await screen.findByLabelText('Suffix:')).toHaveValue('');
+    expect(await screen.findByLabelText('Rank:')).toHaveValue('Colonel');
+    expect(await screen.findByLabelText('Team:')).toHaveValue('SG-1');
+    expect(await screen.findByLabelText('Role:')).toHaveValue('Team Leader');
+    expect(await screen.findByLabelText('Personnel Type:')).toHaveValue("military");
+    expect(await screen.findByLabelText('Status:')).toHaveValue('active');
   });
 
   it('should update values into database after clicking save', async () => {
@@ -177,7 +177,7 @@ describe('PersonnelForm', () => {
     );
 
     // Type into fields
-    await user.selectOptions(await screen.findByLabelText('Status'), "kia");
+    await user.selectOptions(await screen.findByLabelText('Status:'), "kia");
     // click save
     await user.click(screen.getByText('Save'));
 

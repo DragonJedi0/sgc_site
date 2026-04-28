@@ -99,8 +99,8 @@ describe('PersonnelDetail (integration)', () => {
 
         await user.click(await screen.findByText('Edit'));
 
-        expect(await screen.findByLabelText('First Name')).toHaveValue('Daniel');
-        expect(await screen.findByLabelText('Middle Name')).toHaveValue('');
+        expect(await screen.findByLabelText('First Name:')).toHaveValue('Daniel');
+        expect(await screen.findByLabelText('Middle Name:')).toHaveValue('');
     });
 
     it('navigates to the list view when clicking back', async () =>{

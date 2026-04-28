@@ -86,7 +86,7 @@ describe('PersonnelList (integration)', () => {
         const addButton = await screen.findByText(/Add Personnel/);
         await user.click(addButton);
 
-        const nameField = await screen.findByLabelText('First Name');
+        const nameField = await screen.findByLabelText('First Name:');
         expect(nameField).toBeInTheDocument();
     });
 });
