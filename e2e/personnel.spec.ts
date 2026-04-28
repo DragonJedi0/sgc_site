@@ -16,7 +16,6 @@ const e2eTestRec = e2eTestRecords.e2eTestRec;
 const e2eTestRec2 = e2eTestRecords.e2eTestRec2;
 const e2eTestRec3 = e2eTestRecords.e2eTestRec3;
 const e2eTestMilitary = e2eTestRecords.e2eTestMilitary;
-const e2eTestCivilian = e2eTestRecords.e2eTestCivilian;
 
 test.describe('read and verify', () => {
     const displayName = extractName(e2eTestRec).displayName;
@@ -200,6 +199,10 @@ test.describe('read and verify', () => {
 });
 
 test.describe('write then delete', () =>{
+    const link = extractName(e2eTestMilitary).link;
+
+    test.describe.configure({ mode: 'serial' });
+
     // Prevent skipped clean ups
     test.beforeEach(async () => {
         await supabase
@@ -218,7 +221,6 @@ test.describe('write then delete', () =>{
             .eq('last_name', e2eTestMilitary.last_name);
     });
 
-    // Saving a new record navigates to list
     test('saving a new record navigates to list view', async ({ page }) =>{        
         await page.goto(PATHS.PERSONNEL_LIST);
 
@@ -239,16 +241,77 @@ test.describe('write then delete', () =>{
         
         await page.getByRole("button", { name: "Save" }).click();
 
-        const link = extractName(e2eTestMilitary).link;
+        await expect(page).toHaveURL(PATHS.PERSONNEL_LIST);
+        await expect(page.getByText('SGC Personnel')).toBeVisible();
+        await expect(page.getByText(link)).toBeVisible();
+    });
+
+    test('saving an edited record navigates to list view', async ({ page }) =>{        
+        await page.goto(PATHS.PERSONNEL_LIST);
+
+        await page.getByRole('button', { name: 'Add Personnel' }).click();
+
+        // Select Options
+        await page.getByLabel('Prefix').selectOption(e2eTestMilitary.prefix ?? '');
+        await page.getByLabel('Rank').selectOption(e2eTestMilitary.rank ?? '');
+        await page.getByLabel('Personnel Type').selectOption(e2eTestMilitary.personnel_type ?? '');
+        await page.getByLabel('Status').selectOption(e2eTestMilitary.status ?? '');
+        // Fill fields
+        await page.getByLabel('First Name').fill(e2eTestMilitary.first_name ?? '');
+        await page.getByLabel('Middle Name').fill(e2eTestMilitary.middle_name ?? '');
+        await page.getByLabel('Last Name').fill(e2eTestMilitary.last_name ?? '');
+        await page.getByLabel('Suffix').fill(e2eTestMilitary.suffix ?? '');
+        await page.getByLabel('Role').fill(e2eTestMilitary.role ?? '');
+        await page.getByLabel('Team').fill(e2eTestMilitary.team ?? '');
+        
+        await page.getByRole("button", { name: "Save" }).click();
+
+        await page.getByRole("link", { name: link }).click();
+
+        await page.getByRole("button", { name: "Edit" }).click();
+
+        await page.getByLabel('Status').selectOption('kia');
+
+        await page.getByRole("button", { name: "Save" }).click();
+
+        await expect(page).toHaveURL(PATHS.PERSONNEL_LIST);
+        await expect(page.getByText('SGC Personnel')).toBeVisible();
+        await expect(page.getByText(link)).toBeVisible();
+    });
+
+    // Delete with confirmation returns to list
+    test('saving an edited record navigates to list view', async ({ page }) =>{        
+        await page.goto(PATHS.PERSONNEL_LIST);
+
+        await page.getByRole('button', { name: 'Add Personnel' }).click();
+
+        // Select Options
+        await page.getByLabel('Prefix').selectOption(e2eTestMilitary.prefix ?? '');
+        await page.getByLabel('Rank').selectOption(e2eTestMilitary.rank ?? '');
+        await page.getByLabel('Personnel Type').selectOption(e2eTestMilitary.personnel_type ?? '');
+        await page.getByLabel('Status').selectOption(e2eTestMilitary.status ?? '');
+        // Fill fields
+        await page.getByLabel('First Name').fill(e2eTestMilitary.first_name ?? '');
+        await page.getByLabel('Middle Name').fill(e2eTestMilitary.middle_name ?? '');
+        await page.getByLabel('Last Name').fill(e2eTestMilitary.last_name ?? '');
+        await page.getByLabel('Suffix').fill(e2eTestMilitary.suffix ?? '');
+        await page.getByLabel('Role').fill(e2eTestMilitary.role ?? '');
+        await page.getByLabel('Team').fill(e2eTestMilitary.team ?? '');
+        
+        await page.getByRole("button", { name: "Save" }).click();
+
+        await page.getByRole("link", { name: link }).click();
+
+        await page.getByRole("button", { name: "Edit" }).click();
+
+        await page.getByLabel('Status').selectOption('kia');
+
+        await page.getByRole("button", { name: "Save" }).click();
 
         await expect(page).toHaveURL(PATHS.PERSONNEL_LIST);
         await expect(page.getByText('SGC Personnel')).toBeVisible();
         await expect(page.getByText(link)).toBeVisible();
     });
 });
-
-// Saving an edited record navigates to list
-
-// Delete with confirmation returns to list
 
 // Delete cancelled stays on detail page
