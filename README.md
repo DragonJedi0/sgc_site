@@ -50,22 +50,37 @@ VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 ### Running Tests
 
 `npm run test:run`
+`npm run test:e2e`
 
 ## Project Structure
 
 ```
+e2e/
+  personnel.spec.ts
+  testUtils.ts
 src/
   lib/
-    supabase.ts           # Supabase client
+    mockData.ts           # Temp values for tests
+    paths.ts              # paths and routes for easier management
     rankAbbreviations.ts  # Military rank lookup (Air Force specific)
+    supabase.ts           # Supabase client
+  mocks/
+    handlers.ts
+    server.ts
   pages/
     PersonnelList.tsx
     PersonnelDetail.tsx
     PersonnelForm.tsx
   test/
-    PersonnelList.test.tsx
+    integration/
+      PersonnelDetail.integration.test.tsx
+      PersonnelForm.integration.test.tsx
+      PersonnelList.integration.test.tsx
     PersonnelDetail.test.tsx
     PersonnelForm.test.tsx
+    PersonnelList.test.tsx
+    setup.ts
+    testUtils.ts
 ```
 
 ## Development Roadmap
@@ -74,9 +89,11 @@ src/
 - [x] Unit tests
 - [x] CI/CD pipeline
 - [x] Integration tests with MSW
-- [ ] E2E tests with Playwright
-- [ ] Teams management
-- [ ] Mission records
+- [x] E2E tests with Playwright
+- [ ] Teams CRUD
+- [ ] Teams test suite
+- [ ] Mission records CRUD
+- [ ] Mission test suite
 - [ ] GitHub Pages deployment
 - [ ] Styling
 - [ ] Role-based access control
