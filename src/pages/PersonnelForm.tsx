@@ -2,6 +2,11 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 
+type TeamOptions = {
+  id: string;
+  designation: string;
+};
+
 type PersonnelFormData = {
   prefix: string;
   first_name: string;
@@ -10,7 +15,7 @@ type PersonnelFormData = {
   suffix: string;
   rank: string;
   role: string;
-  team: string;
+  team_id: string;
   personnel_type: string;
   status: string;
 };
@@ -23,7 +28,7 @@ const defaultForm: PersonnelFormData = {
   suffix: '',
   rank: '',
   role: '',
-  team: '',
+  team_id: '',
   personnel_type: 'military',
   status: 'active',
 };
@@ -37,7 +42,19 @@ export default function PersonnelForm() {
   const [fetching, setFetching] = useState(isEditing);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
+  const [teams, setTeams] = useState<TeamOptions[]>([]);
+
   useEffect(() => {
+
+    async function fetchTeams() {
+      const { data, error } = await supabase
+        .from('teams')
+        .select('id, designation');
+      if (error) console.error(error);
+      else setTeams(data);
+    }
+    fetchTeams();
+
     if (!isEditing) return;
 
     async function fetchPerson() {
@@ -65,6 +82,7 @@ export default function PersonnelForm() {
       ...form,
       prefix: form.prefix === '' ? null : form.prefix,
       rank: form.rank === '' ? null : form.rank,
+      team_id: form.team_id === '' ? null : form.team_id,
     }
 
     if (isEditing) {
@@ -101,7 +119,7 @@ export default function PersonnelForm() {
         <div className="form-row-3">
           <div className="form-group">
             <label htmlFor="prefix">Prefix: </label>
-            <select id="prefix" name="prefix" value={form.prefix} onChange={handleChange}>
+            <select id="prefix" name="prefix" value={form.prefix} onChange={handleChange} required>
               <option value="">None</option>
               <option value="Mr.">Mr.</option>
               <option value="Ms.">Ms.</option>
@@ -170,7 +188,12 @@ export default function PersonnelForm() {
 
           <div className="form-group">
             <label htmlFor="team">Team: </label>
-            <input id="team" name="team" value={form.team} onChange={handleChange} />
+            <select id="team" name="team_id" value={form.team_id} onChange={handleChange} required>
+              <option value="">None</option>
+              {teams.map((team) => (
+                <option key={team.id} value={team.id}>{team.designation}</option>
+              ))}
+            </select>
           </div>
         </div>
 

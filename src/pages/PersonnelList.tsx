@@ -2,20 +2,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { Link, useNavigate } from 'react-router-dom';
 import { rankAbbreviations } from '../lib/rankAbbreviations';
-
-type Personnel = {
-  id: string;
-  prefix: string | null;
-  first_name: string;
-  middle_name: string | null;
-  last_name: string;
-  suffix: string | null;
-  rank: string | null;
-  role: string;
-  team: string | null;
-  personnel_type: string;
-  status: string;
-};
+import type { Personnel } from '../lib/types';
 
 export default function PersonnelList() {
   const [personnel, setPersonnel] = useState<Personnel[]>([]);
@@ -25,7 +12,9 @@ export default function PersonnelList() {
 
   useEffect(() => {
     async function fetchPersonnel() {
-      const { data, error } = await supabase.from('personnel').select('*');
+      const { data, error } = await supabase
+      .from('personnel')
+      .select('*');
       if (error) {
         console.error(error);
         setError(error.message);

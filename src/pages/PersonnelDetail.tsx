@@ -1,20 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
-
-type Personnel = {
-  id: string;
-  prefix: string | null;
-  first_name: string;
-  middle_name: string | null;
-  last_name: string;
-  suffix: string | null;
-  rank: string | null;
-  role: string;
-  team: string | null;
-  personnel_type: string;
-  status: string;
-};
+import type { Personnel } from '../lib/types';
 
 export default function PersonnelDetail() {
   const { id } = useParams();
@@ -27,7 +14,7 @@ export default function PersonnelDetail() {
     async function fetchPerson() {
       const { data, error } = await supabase
         .from('personnel')
-        .select('*')
+        .select('*, teams!personnel_team_id_fkey(designation)')
         .eq('id', id)
         .single();
       if (error) {
@@ -73,7 +60,7 @@ export default function PersonnelDetail() {
         {person.suffix ? ` ${ person.suffix}` : ''}
       </h1>
       <p>{person.personnel_type == 'civilian' ? 'Civilian Contractor' : person.rank ? `Rank: ${person.rank}` : 'N/A' }</p>
-      <p>Team: {person.team ?? 'Unassigned'}</p>
+      <p>Team: {person.teams?.designation ?? 'Unassigned'}</p>
       <p>Role: {person.role}</p>
       <p>Status: {person.status === "medical_leave" ? "Medical Leave" : `${person.status}`}</p>
       <button onClick={() => navigate('/')}>Back</button>
