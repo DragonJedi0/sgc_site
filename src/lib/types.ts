@@ -10,7 +10,7 @@ export type Personnel = {
   prefix: string | null;
   first_name: string;
   middle_name: string | null;
-  last_name: string;
+  last_name: string | null;
   suffix: string | null;
   rank: string | null;
   role: string;
