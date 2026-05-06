@@ -1,4 +1,4 @@
-// Mock data 
+// Mock data
 export const mockEntry = {
     prefix: "Mr.",
     first_name: "Samuel",
@@ -97,6 +97,20 @@ export const mockPersonnel = [
         last_name: null,
         suffix: '',
         personnel_type: 'civilian'
+    },
+    {
+        id: '7',
+        rank: 'Lieutenant General',
+        role: 'Base Commanding Officer',
+        team_id: 'team-sg-command',
+        teams: { designation: 'SGC' },
+        status: 'active',
+        prefix: 'Mr.',
+        first_name: 'George',
+        middle_name: 'S.',
+        last_name: 'Hammond',
+        suffix: '',
+        personnel_type: 'military'
     }
 ];
 
@@ -155,3 +169,37 @@ export const e2eTestRecords = {
         personnel_type: 'civilian'
     }
 }
+
+// Teams
+export const mockTeams = [
+    {
+        id: 'team-sg-1',
+        designation: 'SG-1',
+        commanding_officer: mockPersonnel[0].id,
+        status: 'active'
+    },
+    {
+        id: 'team-sg-2',
+        designation: 'SG-2',
+        commanding_officer: mockPersonnel[2].id,
+        status: 'active'
+    },
+    {
+        id: 'team-sg-test',
+        designation: 'SG-Test',
+        commanding_officer: mockPersonnel[3].id,
+        status: 'active'
+    },
+    {
+        id: 'team-unassigned',
+        designation: 'Unassigned',
+        commanding_officer: null,
+        status: 'inactive'
+    },
+    {
+        id: 'team-sg-command',
+        designation: 'SGC',
+        commanding_officer: mockPersonnel[6].id,
+        status: 'active'
+    }
+]
