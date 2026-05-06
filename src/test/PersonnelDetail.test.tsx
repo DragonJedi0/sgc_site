@@ -4,7 +4,7 @@ import { describe, it, expect, vi } from 'vitest';
 import PersonnelDetail from '../pages/PersonnelDetail';
 import { supabase } from '../lib/supabase';
 import userEvent from '@testing-library/user-event';
-import { mockPersonnel, mockTeams } from '../lib/mockData';
+import { mockPersonnel } from '../lib/mockData';
 import { PATHS, ROUTES } from '../lib/paths';
 
 const user = userEvent.setup();
