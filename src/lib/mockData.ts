@@ -8,7 +8,6 @@ export const mockEntry = {
     personnel_type: "military",
     rank: "Second Lieutenant",
     team_id: "team-sg-2",
-    teams: { designation: "SG-2" },
     role: "Technical Expert",
     status: "active"
 };

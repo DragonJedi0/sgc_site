@@ -55,9 +55,9 @@ describe('PersonnelForm (integration)', () => {
         await user.type(screen.getByLabelText('Middle Name:'), mockEntry.middle_name);
         await user.type(screen.getByLabelText('Last Name:'), mockEntry.last_name);
         await user.type(screen.getByLabelText('Suffix:'), mockEntry.suffix);
-        await user.type(screen.getByLabelText('Team:'), mockEntry.team);
         await user.type(screen.getByLabelText('Role:'), mockEntry.role);
             // Select dropdown value
+        await user.selectOptions(screen.getByLabelText('Team:'), mockEntry.team_id);
         await user.selectOptions(screen.getByLabelText('Rank:'), mockEntry.rank);
         await user.selectOptions(screen.getByLabelText('Prefix:'), mockEntry.prefix);
         await user.selectOptions(screen.getByLabelText('Personnel Type:'), mockEntry.personnel_type);
@@ -91,6 +91,7 @@ describe('PersonnelForm (integration)', () => {
         await user.type(screen.getByLabelText('First Name:'), mockEntry.first_name);
         await user.type(screen.getByLabelText('Last Name:'), mockEntry.last_name);
         await user.type(screen.getByLabelText('Role:'), mockEntry.role);
+        await user.selectOptions(screen.getByLabelText('Team:'), mockEntry.team_id);
         await user.click(screen.getByText('Save'));
 
         const error = await screen.findByText('insert failed');
@@ -114,9 +115,9 @@ describe('PersonnelForm (integration)', () => {
         await user.type(screen.getByLabelText('Middle Name:'), mockEntry.middle_name);
         await user.type(screen.getByLabelText('Last Name:'), mockEntry.last_name);
         await user.type(screen.getByLabelText('Suffix:'), mockEntry.suffix);
-        await user.type(screen.getByLabelText('Team:'), mockEntry.team);
         await user.type(screen.getByLabelText('Role:'), mockEntry.role);
             // Select dropdown value
+        await user.selectOptions(screen.getByLabelText('Team:'), mockEntry.team_id);
         await user.selectOptions(screen.getByLabelText('Personnel Type:'), mockEntry.personnel_type);
         await user.selectOptions(screen.getByLabelText('Status:'), mockEntry.status);
     
@@ -131,7 +132,7 @@ describe('PersonnelForm (integration)', () => {
             suffix: mockEntry.suffix,
             personnel_type: mockEntry.personnel_type,
             rank: null,
-            team: mockEntry.team,
+            team_id: mockEntry.team_id,
             role: mockEntry.role,
             status: mockEntry.status,
         });
@@ -159,7 +160,7 @@ describe('PersonnelForm (integration)', () => {
         expect(await screen.findByLabelText('Last Name:')).toHaveValue("O'Neill");
         expect(await screen.findByLabelText('Suffix:')).toHaveValue('');
         expect(await screen.findByLabelText('Rank:')).toHaveValue('Colonel');
-        expect(await screen.findByLabelText('Team:')).toHaveValue('SG-1');
+        expect(await screen.findByLabelText('Team:')).toHaveDisplayValue('SG-1');
         expect(await screen.findByLabelText('Role:')).toHaveValue('Team Leader');
         expect(await screen.findByLabelText('Personnel Type:')).toHaveValue("military");
         expect(await screen.findByLabelText('Status:')).toHaveValue('active');
@@ -201,7 +202,8 @@ describe('PersonnelForm (integration)', () => {
             suffix: mockPersonnel[1].suffix,
             personnel_type: mockPersonnel[1].personnel_type,
             rank: mockPersonnel[1].rank,
-            team: mockPersonnel[1].team,
+            team_id: mockPersonnel[1].team_id,
+            teams: mockPersonnel[1].teams,
             role: mockPersonnel[1].role,
             status: "kia",
         });

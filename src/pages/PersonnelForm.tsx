@@ -77,7 +77,15 @@ export default function PersonnelForm() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    console.log('handleSubmit called')
     setLoading(true);
+
+    if(!form.team_id){
+      setSubmitError('Please select a team.');
+      setLoading(false);
+      return;
+    }
+
     const formData = {
       ...form,
       prefix: form.prefix === '' ? null : form.prefix,
@@ -119,7 +127,7 @@ export default function PersonnelForm() {
         <div className="form-row-3">
           <div className="form-group">
             <label htmlFor="prefix">Prefix: </label>
-            <select id="prefix" name="prefix" value={form.prefix} onChange={handleChange} required>
+            <select id="prefix" name="prefix" value={form.prefix} onChange={handleChange}>
               <option value="">None</option>
               <option value="Mr.">Mr.</option>
               <option value="Ms.">Ms.</option>
@@ -188,7 +196,7 @@ export default function PersonnelForm() {
 
           <div className="form-group">
             <label htmlFor="team">Team: </label>
-            <select id="team" name="team_id" value={form.team_id} onChange={handleChange} required>
+            <select id="team" name="team_id" value={form.team_id} onChange={handleChange}>
               <option value="">None</option>
               {teams.map((team) => (
                 <option key={team.id} value={team.id}>{team.designation}</option>
