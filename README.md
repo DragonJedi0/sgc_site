@@ -1,28 +1,180 @@
-## Quick Start
+# SGC Database
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas interdum lacus sodales, aliquam diam non, varius velit. Vestibulum egestas tempor rhoncus. Aliquam ut rutrum ex. Integer nec tortor sit amet nunc faucibus maximus vitae sed orci. Mauris lorem velit, malesuada sit amet turpis ac, egestas aliquam ante. Phasellus in elementum lectus, eu sagittis dolor. Maecenas vehicula mollis augue condimentum ullamcorper. Praesent aliquet consequat nisi, sed elementum velit porta ac. Proin sed quam orci.
+A fictional Stargate Command personnel and mission records system inspired by the TV series _Stargate SG-1_. Built as a portfolio project to demonstrate full-stack development and professional testing practices.
 
+The in-universe premise: NORAD has contracted a developer to digitize the SGC's personnel and mission files into a clean, accessible web application.
 
-## Motivation
+## Tech Stack
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas interdum lacus sodales, aliquam diam non, varius velit. Vestibulum egestas tempor rhoncus. Aliquam ut rutrum ex. Integer nec tortor sit amet nunc faucibus maximus vitae sed orci. Mauris lorem velit, malesuada sit amet turpis ac, egestas aliquam ante. Phasellus in elementum lectus, eu sagittis dolor. Maecenas vehicula mollis augue condimentum ullamcorper. Praesent aliquet consequat nisi, sed elementum velit porta ac. Proin sed quam orci.
+- **Frontend:** React, TypeScript, Vite
+- **Backend/Data:** Supabase (PostgreSQL, auth/db/api)
+- **Testing:** Vitest, React Testing Library, userEvent, Playwright (End to End)
+- **CI/CD:** GitHub Actions
 
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas interdum lacus sodales, aliquam diam non, varius velit. Vestibulum egestas tempor rhoncus. Aliquam ut rutrum ex. Integer nec tortor sit amet nunc faucibus maximus vitae sed orci. Mauris lorem velit, malesuada sit amet turpis ac, egestas aliquam ante. Phasellus in elementum lectus, eu sagittis dolor. Maecenas vehicula mollis augue condimentum ullamcorper. Praesent aliquet consequat nisi, sed elementum velit porta ac. Proin sed quam orci.
+## Features
 
--Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas interdum lacus sodales, aliquam diam non, varius velit. Vestibulum egestas tempor rhoncus. Aliquam ut rutrum ex. Integer nec tortor sit amet nunc faucibus maximus vitae sed orci. Mauris lorem velit, malesuada sit amet turpis ac, egestas aliquam ante. Phasellus in elementum lectus, eu sagittis dolor. Maecenas vehicula mollis augue condimentum ullamcorper. Praesent aliquet consequat nisi, sed elementum velit porta ac. Proin sed quam orci.
+- Full CRUD for SGC personnel records
+- Full CRUD for SGC Teams
+- Full CRUD for Mission Records
+- Role-aware display (military rank abbreviations vs civilian titles)
+- Enum-enforced data integrity
+  - Personnel (rank, status, prefix, personnel type, role, and team assignment)
+  - Teams (commanding_officer)
+  - Missions (status)
+- Comprehensive unit test suite with mocked Supabase client
+- Comprehensive integration test suite with MSW.
+- Comprehensive end-to-end test suite with Playwright.
+- Automated CI pipeline on push to main, staging, and dev branches
 
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas interdum lacus sodales, aliquam diam non, varius velit. Vestibulum egestas tempor rhoncus. Aliquam ut rutrum ex. Integer nec tortor sit amet nunc faucibus maximus vitae sed orci. Mauris lorem velit, malesuada sit amet turpis ac, egestas aliquam ante. Phasellus in elementum lectus, eu sagittis dolor. Maecenas vehicula mollis augue condimentum ullamcorper. Praesent aliquet consequat nisi, sed elementum velit porta ac. Proin sed quam orci.
+## Getting Started
 
+### Prerequisites
 
-## Quick Start
+- Node.js 22+
+- npm
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas interdum lacus sodales, aliquam diam non, varius velit. Vestibulum egestas tempor rhoncus. Aliquam ut rutrum ex. Integer nec tortor sit amet nunc faucibus maximus vitae sed orci. Mauris lorem velit, malesuada sit amet turpis ac, egestas aliquam ante. Phasellus in elementum lectus, eu sagittis dolor. Maecenas vehicula mollis augue condimentum ullamcorper. Praesent aliquet consequat nisi, sed elementum velit porta ac. Proin sed quam orci.
+### Installation
 
+```bash
+git clone https://github.com/DragonJedi0/sgc_site.git
+cd sgc_site
+npm install
+```
 
-## Usage
+### Environment Variables
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas interdum lacus sodales, aliquam diam non, varius velit. Vestibulum egestas tempor rhoncus. Aliquam ut rutrum ex. Integer nec tortor sit amet nunc faucibus maximus vitae sed orci. Mauris lorem velit, malesuada sit amet turpis ac, egestas aliquam ante. Phasellus in elementum lectus, eu sagittis dolor. Maecenas vehicula mollis augue condimentum ullamcorper. Praesent aliquet consequat nisi, sed elementum velit porta ac. Proin sed quam orci.
+Create a `.env` file in the project root:
+
+```
+VITE_SUPABASE_URL=your_supabase_project_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+VITE_SUPABASE_SERVICE_KEY=your_supabase_service_key
+SGC_USER_EMAIL=your_test_user_email
+SGC_USER_PASSWORD=your_test_user_password
+SGC_OFFICER_EMAIL=your_test_officer_email
+SGC_OFFICER_PASSWORD=your_test_officer_password
+SGC_ADMIN_EMAIL=your_test_admin_email
+SGC_ADMIN_PASSWORD=your_test_admin_password
+```
+
+### Running Locally
+
+`npm run dev`
+
+### Running Tests
+
+`npm run test:run`
+`npm run test:e2e`
+
+## Project Structure
+
+```
+e2e/
+  interface.ts            # Test Objects for mock entries
+  login.spec.ts
+  mission.spec.ts
+  mockData.ts             # Temp values for E2E tests
+  personnel.spec.ts
+  teams.spec.ts
+  testUtils.ts            # Helper functions for E2E tests
+src/
+  components/
+    Navbar.tsx            # Global navigation bar
+    ProtectedRoutes.tsx   # Secures UI for authenticated users
+  lib/
+    mockData.ts           # Temp values for tests
+    paths.ts              # paths and routes for easier management
+    rankAbbreviations.ts  # Military rank lookup (Air Force specific)
+    supabase.ts           # Supabase client
+    types.ts              # Test Objects for mock database
+    utils.ts              # helper functions for pages and tests
+  mocks/
+    handlers.ts
+    server.ts
+  pages/
+    Homepage.tsx
+    LoginForm.tsx
+    MissionDetail.tsx
+    MissionForm.tsx
+    MissionList.tsx
+    PersonnelList.tsx
+    PersonnelDetail.tsx
+    PersonnelForm.tsx
+    TeamDetail.tsx
+    TeamForm.tsx
+    TeamList.tsx
+  test/
+    integration/
+      Homepage.integration.test.tesx
+      MissionDetail.integration.test.tsx
+      MissionForm.integration.test.tsx
+      MissionList.integration.test.tsx
+      PersonnelDetail.integration.test.tsx
+      PersonnelForm.integration.test.tsx
+      PersonnelList.integration.test.tsx
+      TeamDetail.integration.test.tsx
+      TeamForm.integration.test.tsx
+      TeamList.integration.test.tsx
+    Homepage.test.tsx
+    LoginForm.test.tsx
+    MissionDetail.test.tsx
+    MissionForm.test.tsx
+    MissionList.test.tsx
+    PersonnelDetail.test.tsx
+    PersonnelForm.test.tsx
+    PersonnelList.test.tsx
+    setup.ts
+    TeamDetail.test.tsx
+    TeamForm.test.tsx
+    TeamList.test.tsx
+    testUtils.ts        # Additional handlers that return a body for tests
+```
+
+## Development Roadmap
+
+- [x] Personnel CRUD
+- [x] Unit tests
+- [x] CI/CD pipeline
+- [x] Integration tests with MSW
+- [x] E2E tests with Playwright
+- [x] Teams schema
+  - [x] Migrate personnel to use team_id foreign key
+- [x] Teams CRUD
+  - [x] Teams unit test suite
+  - [x] Teams integration test suite
+  - [x] Teams e2e test suite
+- [x] Mission Records schema
+  - [x] Create many to many relationship between personnel, teams, and missions tables
+- [x] Mission records CRUD
+  - [x] Missions unit test suite
+  - [x] Missions integration test suite
+  - [x] Missions e2e test suite
+- [x] Role-based access control
+  - [x] Modify tests to check for user access control
+  - [x] Create Unit tests
+  - [x] Create API tests
+    - [x] Personnel
+    - [x] Teams
+    - [x] Missions
+- [x] GitHub Pages deployment
+- Quality of Life Updates
+  - Fix logicial bugs (In Progress)
+  - Styling
+  - Join Table for team member population and history
+  - Edit team members from Team Detail page
+
+## Why I Built This
+
+I built this project to improve my testing skills using tools that are more common in modern web development than Behat. My goal was to get practical experience with unit, integration, and end-to-end testing while building a full-stack CRUD application.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE). You are free to use, copy, and modify the code for your own purposes.
+
+## Disclaimer
+
+This is a non-commercial fan project. _Stargate_, _Stargate SG-1_, and all related marks, logos, and characters are trademarks of Metro-Goldwyn-Mayer Studios Inc. (MGM). This project is not endorsed by or affiliated with MGM or the Stargate franchise. All copyrighted materials are used under Fair Use for educational and portfolio purposes.
 
 ## Contributing
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas interdum lacus sodales, aliquam diam non, varius velit. Vestibulum egestas tempor rhoncus. Aliquam ut rutrum ex. Integer nec tortor sit amet nunc faucibus maximus vitae sed orci. Mauris lorem velit, malesuada sit amet turpis ac, egestas aliquam ante. Phasellus in elementum lectus, eu sagittis dolor. Maecenas vehicula mollis augue condimentum ullamcorper. Praesent aliquet consequat nisi, sed elementum velit porta ac. Proin sed quam orci.
+Contributions are appreciated, but not required at this stage as this project will not be published in any capacity other than surface level presentation.
