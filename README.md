@@ -26,7 +26,18 @@ The in-universe premise: NORAD has contracted a developer to digitize the SGC's 
 - Comprehensive end-to-end test suite with Playwright.
 - Automated CI pipeline on push to main, staging, and dev branches
 
-## Getting Started
+## Quick Start
+
+## Motivation
+
+## Quick Start
+
+## Usage
+
+## Contributing
+
+
+Stop reading
 
 ### Prerequisites
 
@@ -59,13 +70,9 @@ SGC_ADMIN_PASSWORD=your_test_admin_password
 
 ### Running Locally
 
-## Quick Start
-
 `npm run dev`
 
 ### Running Tests
-
-## Usage
 
 `npm run test:run`
 `npm run test:e2e`
@@ -167,9 +174,9 @@ src/
   - Join Table for team member population and history
   - Edit team members from Team Detail page
 
-## Motivation
+## Why I Built This
 
-I built this project to improve my testing skills using tools that are more common in modern web development than Behat. My goal was to get practical experience with unit, integration, and end-to-end testing while building a full-stack CRUD application. While this was the academic reason, my main motivation for using Stargate was to give me a fun idea to cling to that would be different than a Pokemon API app or similar school level lessons.
+I built this project to improve my testing skills using tools that are more common in modern web development than Behat. My goal was to get practical experience with unit, integration, and end-to-end testing while building a full-stack CRUD application.
 
 ## License
 
