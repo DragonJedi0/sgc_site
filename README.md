@@ -167,9 +167,9 @@ src/
   - Join Table for team member population and history
   - Edit team members from Team Detail page
 
-## Why I Built This
+## Motivation
 
-I built this project to improve my testing skills using tools that are more common in modern web development than Behat. My goal was to get practical experience with unit, integration, and end-to-end testing while building a full-stack CRUD application. While this was the academic reason, my main Motivation for using Stargate was to give me a fun idea to cling to that would be different than a Pokemon API app or similar school level lessons.
+I built this project to improve my testing skills using tools that are more common in modern web development than Behat. My goal was to get practical experience with unit, integration, and end-to-end testing while building a full-stack CRUD application. While this was the academic reason, my main motivation for using Stargate was to give me a fun idea to cling to that would be different than a Pokemon API app or similar school level lessons.
 
 ## License
 
