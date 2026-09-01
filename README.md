@@ -178,8 +178,3 @@ This is a non-commercial fan project. _Stargate_, _Stargate SG-1_, and all relat
 ## Contributing
 
 Contributions are appreciated, but not required at this stage as this project will not be published in any capacity other than surface level presentation.
-
-Motivation
-Quick Start
-Usage
-Contributing
