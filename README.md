@@ -48,7 +48,7 @@ Create a `.env` file in the project root:
 ```
 VITE_SUPABASE_URL=your_supabase_project_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-VITE_SUPABASE_VITE_SUPABASE_SERVICE_KEY=your_supabase_service_key
+VITE_SUPABASE_SERVICE_KEY=your_supabase_service_key
 SGC_USER_EMAIL=your_test_user_email
 SGC_USER_PASSWORD=your_test_user_password
 SGC_OFFICER_EMAIL=your_test_officer_email
@@ -174,3 +174,12 @@ This project is licensed under the [MIT License](LICENSE). You are free to use, 
 ## Disclaimer
 
 This is a non-commercial fan project. _Stargate_, _Stargate SG-1_, and all related marks, logos, and characters are trademarks of Metro-Goldwyn-Mayer Studios Inc. (MGM). This project is not endorsed by or affiliated with MGM or the Stargate franchise. All copyrighted materials are used under Fair Use for educational and portfolio purposes.
+
+## Contributing
+
+Contributions are appreciated, but not required at this stage as this project will not be published in any capacity other than surface level presentation.
+
+Motivation
+Quick Start
+Usage
+Contributing
