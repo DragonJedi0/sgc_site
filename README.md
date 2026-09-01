@@ -59,9 +59,13 @@ SGC_ADMIN_PASSWORD=your_test_admin_password
 
 ### Running Locally
 
+## Quick Start
+
 `npm run dev`
 
 ### Running Tests
+
+## Usage
 
 `npm run test:run`
 `npm run test:e2e`
@@ -165,7 +169,7 @@ src/
 
 ## Why I Built This
 
-I built this project to improve my testing skills using tools that are more common in modern web development than Behat. My goal was to get practical experience with unit, integration, and end-to-end testing while building a full-stack CRUD application.
+I built this project to improve my testing skills using tools that are more common in modern web development than Behat. My goal was to get practical experience with unit, integration, and end-to-end testing while building a full-stack CRUD application. While this was the academic reason, my main Motivation for using Stargate was to give me a fun idea to cling to that would be different than a Pokemon API app or similar school level lessons.
 
 ## License
 
@@ -174,3 +178,7 @@ This project is licensed under the [MIT License](LICENSE). You are free to use, 
 ## Disclaimer
 
 This is a non-commercial fan project. _Stargate_, _Stargate SG-1_, and all related marks, logos, and characters are trademarks of Metro-Goldwyn-Mayer Studios Inc. (MGM). This project is not endorsed by or affiliated with MGM or the Stargate franchise. All copyrighted materials are used under Fair Use for educational and portfolio purposes.
+
+## Contributing
+
+Contributions are appreciated, but not required at this stage as this project will not be published in any capacity other than surface level presentation.
